@@ -1,11 +1,10 @@
-import Editor from "./components/Editor";
-
+import AppLayout from "./components/AppLayout";
 function App() {
   const ipcHandle = () => window.electron.ipcRenderer.send('ping')
 
   return (
     <>
-      <Editor />
+      <AppLayout></AppLayout>
     </>
   )
 }

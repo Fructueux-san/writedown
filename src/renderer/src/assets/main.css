@@ -14,3 +14,14 @@ body {
     filter: brightness(1);
 }
 
+
+/* Couleur de la scrollbar */
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+    scrollbar-width: thin;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #3b3b3b; /* Couleur de la poignée de la scrollbar */
+    border-radius: 6px;
+}

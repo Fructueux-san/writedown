@@ -1,7 +1,9 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import useCodemirror from "../utils/useCodemirror";
 
-function Editor() {
+import '../assets/editor.css';
+
+const Editor = () =>{
   const handleChange = useCallback(
     state => onChange(state.doc.toString()), []
   );
@@ -17,5 +19,5 @@ function Editor() {
   );
 }
 
-export default Editor;
 
+export default Editor;
