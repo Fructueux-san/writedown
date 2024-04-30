@@ -8,14 +8,25 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
+    minHeight: 500,
+    minWidth: 600,
     show: false,
     autoHideMenuBar: true,
+    vibrancy: 'under-window',
+    visualEffectState: "active",
+    darkTheme: true,
+    resizable: true,
+    transparent: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
     }
   })
+
+  mainWindow.webContents.on('dom-ready', () => {
+    mainWindow.blur = 10;
+  });
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
