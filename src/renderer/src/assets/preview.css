@@ -1,0 +1,39 @@
+ .preview {
+  /* flex: 0 0 50%; */
+  padding: 7px;
+  box-sizing: border-box;
+  overflow: auto;
+  color: #c7ccd6;
+  height: 100vh;
+  transition: flex 1s;
+  transition-timing-function: ease-in-out;
+  margin-right: 50px;
+  padding-bottom: 150px;
+  width: 100%;
+}
+
+
+.preview.markdown-body pre {
+  background-color: rgba(27, 31, 35, 0.45);
+}
+
+tr {
+  border-top: 1px solid #c6cbd1;
+  background: transparent;
+}
+
+th,
+td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+
+}
+
+table {
+  border-spacing: 0;
+}
+
+table tr:nth-child(2n) {
+  /* background: #f6f8fa; */
+  background: transparent;
+}

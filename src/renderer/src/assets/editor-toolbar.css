@@ -1,0 +1,32 @@
+.app-layout .editor-layout header {
+  display: flex;
+  padding: 6px;
+  background-color: rgb(47, 47, 47);
+}
+
+.app-layout .editor-layout header .btn-bloc {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin-left: 20px;
+}
+
+.app-layout .editor-layout header .btn-bloc button {
+  outline: none;
+  background-color: transparent;
+  padding: 3px;
+  color: white;
+  border: 1px solid #3b3b3b;
+  padding: 6px;
+  border-radius: 5px;
+}
+
+.app-layout .editor-layout header .btn-bloc button:hover {
+  background-color: #3b3b3b;
+}
+
+.app-layout .editor-layout header .btn-bloc button.active {
+  background-color: #3b3b3b;
+  font-weight: bold;
+}
+

@@ -3,3 +3,11 @@
   flex-direction: row;
 }
 
+.app-layout .editor-layout {
+  border-left: 1px solid #3b3b3b;
+  width: 100%;
+  background-color: rgba(47, 47, 47, 0.97);
+
+  filter: blur(10);
+  filter: brightness(1);
+}
