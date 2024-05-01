@@ -32,6 +32,7 @@
   margin: 0.5rem;
   border-radius: 10px;
   cursor: pointer;
+  user-select: none;
 }
 .sidebar .sidebar-content .content .title {
   font-weight: bold;

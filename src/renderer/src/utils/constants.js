@@ -34,14 +34,12 @@ export const editor_fulfill = `
 # Hello universe !
 
 ## What's up guys !!
-Here is Fructueux. Software developer and tech anthousiast. Loving code cool and interesting stuff with beautiful UI !
+Here is Stanislas Fructueux HOUETO (Stan if you want). Software developer and tech anthousiast. Loving code cool and interesting stuff with beautiful UI !
 
-Let-s talk a little bit about this app. It's a multi-purpose app with two principal functionnality (for now, surely !) :
+Let-s talk a little bit about this app. It's a Markdown note taking app.
 * Note taking app : based on *Markdown* syntax (The <strong>editor </strong> support __HTML__ also)
-* File transfer functionnality (based on web socket)
+* Others bunch of functionnality are comming !!!
 
-The file transfer functionnality is coupled
-with mobile app, in development.
 
 ---
 
@@ -82,7 +80,7 @@ We don't have a name for our app yet. But some kind people try to help me about.
 | Me | Bootiful | A little bit funny, I know ...|
 |Mom|  | I always trying to explain her what is computer science. But she always prays for me. Love you mom |
 | Rayon de soleil | Horizon or bluesky | She knows that I like to look at the sky and the clouds |
-|Vivi| 😓 | She do not see if it's useful |
+|Vivi| 😓 | She do not see its usefulness |
 
 `;
 

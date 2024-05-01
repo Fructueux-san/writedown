@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import useCodemirror from "../utils/useCodemirror";
+import { editor_fulfill } from "../utils/constants";
 
 import '../assets/editor.css';
 
@@ -9,7 +10,7 @@ const Editor = () =>{
   );
 
   const [refContainer, editorView] = useCodemirror({
-    initialDoc: "# Hello world !",
+    initialDoc: editor_fulfill,
     onChange: handleChange,
   })
   return (
