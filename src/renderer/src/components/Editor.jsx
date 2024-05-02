@@ -6,7 +6,7 @@ import '../assets/editor.css';
 
 const Editor = () =>{
   const handleChange = useCallback(
-    state => onChange(state.doc.toString()), []
+    state => console.log("Change happen in the editor"), []
   );
 
   const [refContainer, editorView] = useCodemirror({

@@ -1,4 +1,11 @@
+.sidebar > * {
 
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
 .sidebar {
   min-width: 250px;
   height: 100vh;

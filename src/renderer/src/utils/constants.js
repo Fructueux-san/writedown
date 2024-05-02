@@ -75,11 +75,13 @@ function foo(){
 
 ---
 ## Some cites
-* > Life's good. LG.
+> Life's good. LG.
 
 ### Some fruits
 * Apple
 * Banana
+  * Coconut
+  * Strawberry
 
 
 ---

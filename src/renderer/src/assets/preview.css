@@ -11,7 +11,19 @@
   padding-bottom: 150px;
   width: 100%;
 }
-
+.preview h1 {
+  font-size: 2em;
+}
+.preview blockquote {
+  padding: 10px;
+  background-color: rgba(27, 31, 35, 0.45);
+}
+.preview blockquote::before {
+    content: "";
+    width: 3px;
+    background-color: white;
+    height: 100%;
+}
 
 .preview.markdown-body pre {
   background-color: rgba(27, 31, 35, 0.45);

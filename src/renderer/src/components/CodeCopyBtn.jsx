@@ -1,7 +1,7 @@
 import React from "react";
 import {FaCheck, FaCopy} from "react-icons/fa6";
 
-export default function CopyBtn({ children }) {
+export default function CodeCopyBtn({ children }) {
     const [copyOk, setCopyOk] = React.useState(false);
     const iconColor = copyOk ? '#0af20a' : '#ddd';
     const icon = copyOk ? FaCheck : FaCopy;
@@ -19,3 +19,4 @@ export default function CopyBtn({ children }) {
         </div>
     )
 }
+

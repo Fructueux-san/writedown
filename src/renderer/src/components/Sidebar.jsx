@@ -32,7 +32,7 @@ const SideBar = (props) => {
       </div>
       <ul className="sidebar-content">
         {
-          notes.map(element => <Content title={element.title} lastEdit={element.lastEditTime} />)
+          notes.map(element => <Content key={element.id} title={element.title} lastEdit={element.lastEditTime} />)
         }
       </ul>
     </div>
