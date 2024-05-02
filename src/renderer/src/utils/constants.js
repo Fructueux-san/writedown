@@ -73,6 +73,16 @@ function foo(){
 
 ~~~
 
+---
+## Some cites
+* > Life's good. LG.
+
+### Some fruits
+* Apple
+* Banana
+
+
+---
 We don't have a name for our app yet. But some kind people try to help me about.
 
 | Friend | Proposition | other information |
