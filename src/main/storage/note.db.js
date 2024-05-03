@@ -1,26 +1,27 @@
 
-var knex = require("./storage").knex;
+// var knex = require("./storage").knex;
+import { knex } from "./storage";
 
- function getAllNotes() {
+export function getAllNotes() {
   var result = knex("notes").select("*");
   // Remove the content from the list
   // result.map(({content, ...rest}) => rest);
   return result;
 }
 
- function createNote(note) {
+export function createNote(note) {
   return knex("notes").insert(note);
 }
 
- function deleteNote(id) {
+export function deleteNote(id) {
   return knex("notes").where("id", id).del();
 }
 
- function getNoteInfo(id) {
+export function getNoteInfo(id) {
   return knex("notes").where("id", id).first();
 }
 
- function updateNote(id, note) {
+export function updateNote(id, note) {
   return knex("notes").where("id", id).update(note);
 }
 

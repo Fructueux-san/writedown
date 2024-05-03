@@ -1,7 +1,7 @@
-const db = require("./note.db.js");
-const { setupDatabase } = require("./storage.js");
+// const db = require("./note.db.js");
+import { createNote, getAllNotes } from "./note.db.js";
 
-async function seedNotes() {
+export async function seedNotes() {
   let notes = [
     {
       content: "# This is some note. Good stuffs are comming",
@@ -30,16 +30,16 @@ async function seedNotes() {
 
   ];
 
-  // notes.forEach(async (note) => await db.createNote(note));
-  // await db.createNote({
-  //   "title" : `# This is the note title.`,
-  //   "content": `# This is the content of the note.`,
-  //   "created_at": "2024-05-03 01:15:00",
-  //   "updated_at": "2024-05-03 01:15:00"
-  // });
-  // console.log("Notes seed done ! ");
-  console.log(await db.getAllNotes());
+  notes.forEach(async (note) => await createNote(note));
+  await createNote({
+    "title" : `# This is the note title.`,
+    "content": `# This is the content of the note.`,
+    "created_at": "2024-05-03 01:15:00",
+    "updated_at": "2024-05-03 01:15:00"
+  });
+  console.log("Notes seed done ! ");
+  console.log(await getAllNotes());
 }
 
 // setupDatabase();
-seedNotes();
+// seedNotes();

@@ -1,12 +1,13 @@
-const knex = require("knex")({
+import { seedNotes } from "./seeder";
+export const knex = require("knex")({
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-      filename: '../notesdb.db',
+      filename: './notes.db',
     }
 });
 
-async function setupDatabase() {
+export async function setupDatabase() {
 
 
   try {
@@ -19,8 +20,8 @@ async function setupDatabase() {
             table.text("content");
             table.timestamps({useTimestamps: true,  useCamelCase: false});
           });
-        return;
       }
+      return;
     });
 
 

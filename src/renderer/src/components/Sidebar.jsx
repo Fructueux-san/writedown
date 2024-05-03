@@ -4,13 +4,20 @@ import {LuFileSignature} from "react-icons/lu";
 import {FaRegTrashCan} from "react-icons/fa6";
 import { notes } from "../utils/constants";
 import { formatDateFromMs } from "../utils/helpers";
-const Content = ({title, lastEdit}) => {
-    var date = formatDateFromMs(lastEdit);
+import { allNotesAtom, selectedNoteAtom } from "../hooks/editor";
+import { useAtom } from "jotai";
+const Content = ({id, title, lastEdit}) => {
+    // var date = formatDateFromMs(lastEdit);
+    const [select, setSelected] = useAtom(selectedNoteAtom);
+    function selectNote() {
+      setSelected(id);
+      console.log(id);
+    }
     return (
-      <li className="content">
+      <li className={(id==select ? "active " : " ")+"content"} onClick={selectNote}>
         <div className="title">{title}</div>
         <p>
-          {date}
+          {lastEdit}
         </p>
       </li>
     );
@@ -18,6 +25,8 @@ const Content = ({title, lastEdit}) => {
 
 
 const SideBar = (props) => {
+
+  const [notes, setNotes] = useAtom(allNotesAtom);
 
   return (
     <div className="sidebar">
@@ -32,7 +41,7 @@ const SideBar = (props) => {
       </div>
       <ul className="sidebar-content">
         {
-          notes.map(element => <Content key={element.id} title={element.title} lastEdit={element.lastEditTime} />)
+          notes.map(element => <Content key={element.id} id={element.id} title={element.title} lastEdit={element.updated_at}/>)
         }
       </ul>
     </div>

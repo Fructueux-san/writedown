@@ -31,6 +31,13 @@
   border-radius: 5px;
   border: 1px solid #efefef;
 }
+.sidebar .sidebar-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding-bottom: 100px;
+}
 
 .sidebar .sidebar-content .content {
   color: white;
@@ -46,5 +53,9 @@
 }
 
 .sidebar .sidebar-content .content:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .sidebar-content .content.active {
   background-color: rgba(255, 255, 255, 0.2);
 }
