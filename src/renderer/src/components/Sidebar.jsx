@@ -5,6 +5,8 @@ import {FaRegTrashCan} from "react-icons/fa6";
 import { formatDateFromMs } from "../utils/helpers";
 import { allNotesAtom, editorViewOpenedAtom, openDoc, selectedNoteAtom } from "../hooks/editor";
 import { useAtom } from "jotai";
+
+
 const Content = ({id, title, lastEdit}) => {
     // var date = formatDateFromMs(lastEdit);
     const [select, setSelected] = useAtom(selectedNoteAtom);
@@ -18,7 +20,7 @@ const Content = ({id, title, lastEdit}) => {
       let onEditing = window.electron.ipcRenderer.send("get-one-note", id);
     window.electron.ipcRenderer.on("one-note", (event, data) => {
       setOpened(data["content"]);
-      setRawActive(true);
+      // setRawActive(true);
       // console.log(open);
     });
       console.log(id);
