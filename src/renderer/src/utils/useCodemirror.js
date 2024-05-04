@@ -9,6 +9,8 @@ import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { tags } from "@lezer/highlight";
+import { selectedNoteAtom } from "../hooks/editor";
+import { useAtom } from "jotai";
 export const transparentTheme = EditorView.theme({
     '&': {
         backgroundColor: 'transparent !important',
@@ -65,11 +67,12 @@ const theme = EditorView.theme({
     }
 })
 
-const useCodemirror = (props) => {
+const useCodemirror = (props, state) => {
     const refContainer = useRef(null);
     const [editorView, setEditorView] = useState();
     const { onChange } = props;
 
+    const [docIndex] = useAtom(selectedNoteAtom);
 
     useEffect(() => {
         if (!refContainer.current) return;
@@ -109,7 +112,7 @@ const useCodemirror = (props) => {
         return () => {
             view.destroy();
         };
-    }, [refContainer]);
+    }, [docIndex, refContainer]);
 
     return [refContainer, editorView];
 }

@@ -1,0 +1,26 @@
+.default-layout {
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: #3b3b3b;
+  font-size: 1.5rem;
+  user-select: none;
+}
+
+.default-layout a {
+  text-decoration: none;
+  color: orange;
+}
+
+.default-layout .icon:hover {
+  color: orange;
+}
+
+.default-layout a:hover {
+  text-decoration: underline;
+}
+

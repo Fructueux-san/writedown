@@ -3,8 +3,8 @@ import { atom } from "jotai";
 export const selectedNoteAtom = atom(null);
 export const allNotes = [];
 export const allNotesAtom = atom(allNotes);
-export const openDoc = atom(
-    (get) => get(selectedNoteAtom) === null ?
-    "# Welcome dude !" :
-    window.db.getNoteInfo()
-);
+export let openDoc = atom(null);
+
+
+
+// window.electron.ipcRenderer.send("one-note", get(selectedNoteAtom));
