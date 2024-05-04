@@ -9,7 +9,7 @@ import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { tags } from "@lezer/highlight";
-import { selectedNoteAtom } from "../hooks/editor";
+import { openedObjectAtom, selectedNoteAtom } from "../hooks/editor/index";
 import { useAtom } from "jotai";
 export const transparentTheme = EditorView.theme({
     '&': {
@@ -73,6 +73,8 @@ const useCodemirror = (props, state) => {
     const { onChange } = props;
 
     const [docIndex] = useAtom(selectedNoteAtom);
+    const [docObject] = useAtom(openedObjectAtom);
+
 
     useEffect(() => {
         if (!refContainer.current) return;
@@ -98,6 +100,20 @@ const useCodemirror = (props, state) => {
                 EditorView.updateListener.of(update => {
                     if (update.changes) {
                         onChange && onChange(update.state);
+
+                        let data = {
+                                id: docIndex,
+                                note: {
+                                  title: docObject.title,
+                                  content: update.state.doc.toString(),
+                                  updated_at: Date.now(),
+                                }
+                              }
+                      console.log(data);
+                        window.electron.ipcRenderer.send("save-note", data);
+                        window.electron.ipcRenderer.on("success", (event, message) => {
+                            console.log("[SAVING MESSAGE]", message);
+                        });
                     }
                 }),
             ]

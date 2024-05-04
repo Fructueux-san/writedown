@@ -3,7 +3,7 @@ import "../assets/sidebar.css";
 import {LuFileSignature} from "react-icons/lu";
 import {FaRegTrashCan} from "react-icons/fa6";
 import { formatDateFromMs } from "../utils/helpers";
-import { allNotesAtom, editorViewOpenedAtom, openDoc, selectedNoteAtom } from "../hooks/editor";
+import { allNotesAtom, editorViewOpenedAtom, openDoc, openedObjectAtom, selectedNoteAtom } from "../hooks/editor";
 import { useAtom } from "jotai";
 
 
@@ -12,16 +12,19 @@ const Content = ({id, title, lastEdit}) => {
     const [select, setSelected] = useAtom(selectedNoteAtom);
     const [open, setOpened] = useAtom(openDoc);
     const [rawActive, setRawActive] = useAtom(editorViewOpenedAtom);
+    const [openedObject, setOpenedObject] = useAtom(openedObjectAtom);
     function selectNote() {
       setOpened(null);
       setRawActive(false);
 
       setSelected(id);
       let onEditing = window.electron.ipcRenderer.send("get-one-note", id);
-    window.electron.ipcRenderer.on("one-note", (event, data) => {
+    window.electron.ipcRenderer.on("one-note", async (event, data) => {
+
+      setOpenedObject(await data);
       setOpened(data["content"]);
-      // setRawActive(true);
-      // console.log(open);
+      // console.log("ONE NOTE DATA", await data);
+
     });
       console.log(id);
     }
@@ -53,7 +56,7 @@ const SideBar = (props) => {
       </div>
       <ul className="sidebar-content">
         {
-          notes.map(element => <Content key={element.id} id={element.id} title={element.title} lastEdit={element.updated_at}/>)
+          notes.map((element, index) => <Content key={element.id} id={element.id} title={element.title} lastEdit={element.updated_at}/>)
         }
       </ul>
     </div>

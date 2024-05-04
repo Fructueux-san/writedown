@@ -14,6 +14,7 @@ export const notesEvents = (ipcMain) => {
   });
 
   ipcMain.on("save-note", async (event, data) => {
+    // console.log("WE WANT TO SAVE NOTE ", data);
     await updateNote(data['id'], data['note']);
     event.sender.send("success", "Note successfully saved in database.");
   });

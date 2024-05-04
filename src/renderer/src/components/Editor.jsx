@@ -8,9 +8,10 @@ import { openDoc, selectedNoteAtom } from "../hooks/editor";
 
 const Editor = ({doc, onChange}) => {
   const [openedDoc, setOpenedDoc] = useAtom(openDoc);
+  const [activeDoc] = useAtom(selectedNoteAtom);
   const handleChange = useCallback(
     state => {
-      setOpenedDoc(state.doc.toString())
+      setOpenedDoc(state.doc.toString());
     }, []);
 
    const [refContainer, editorView] = useCodemirror({
