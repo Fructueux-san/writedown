@@ -6,6 +6,8 @@
   top: 0;
   z-index: 1;
   width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .app-layout .editor-layout header .btn-bloc {
@@ -35,3 +37,17 @@
   font-weight: bold;
 }
 
+
+.app-layout .editor-layout header .actions {
+  display: flex;
+  flex-direction: row;
+  margin-right: 20px;
+}
+
+.app-layout .editor-layout header .actions .close-btn:hover{
+  scale: 1.06;
+  color: orange;
+}
+.app-layout .editor-layout header .actions .close-btn:hover > * {
+  color: orange;
+}

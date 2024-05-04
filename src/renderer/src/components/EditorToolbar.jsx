@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { RiCloseFill, RiCloseCircleLine } from "react-icons/ri";
 import "../assets/editor-toolbar.css";
 import { useAtom } from "jotai";
-import { editorViewOpenedAtom } from "../hooks/editor";
+import { editorViewOpenedAtom, openDoc, selectedNoteAtom } from "../hooks/editor";
 
 export const Toolbar = () => {
   const [editorActive, setEditorActive] = useAtom(editorViewOpenedAtom);
+  const [openedNote, setOpenedNote] = useAtom(selectedNoteAtom);
+  const [doc, setDoc] = useAtom(openDoc);
 
   const activeRawBtn = () => {
     if (editorActive){
@@ -21,6 +24,12 @@ export const Toolbar = () => {
     }
   }
 
+  const closeActiveNote = () => {
+    setOpenedNote(null);
+    setDoc(null);
+    setEditorActive(false);
+  }
+
   return (
     <header>
       <div className="btn-bloc">
@@ -28,7 +37,7 @@ export const Toolbar = () => {
         <button className={(!editorActive ? 'active' : '')} onClick={activePreviewBtn}>Preview</button>
       </div>
       <div className="actions">
-
+        <RiCloseCircleLine size={22} color="white" className="close-btn" title="close" onClick={closeActiveNote}/>
       </div>
     </header>
   );
