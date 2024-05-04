@@ -3,18 +3,22 @@ import "../assets/sidebar.css";
 import {LuFileSignature} from "react-icons/lu";
 import {FaRegTrashCan} from "react-icons/fa6";
 import { formatDateFromMs } from "../utils/helpers";
-import { allNotesAtom, openDoc, selectedNoteAtom } from "../hooks/editor";
+import { allNotesAtom, editorViewOpenedAtom, openDoc, selectedNoteAtom } from "../hooks/editor";
 import { useAtom } from "jotai";
 const Content = ({id, title, lastEdit}) => {
     // var date = formatDateFromMs(lastEdit);
     const [select, setSelected] = useAtom(selectedNoteAtom);
     const [open, setOpened] = useAtom(openDoc);
+    const [rawActive, setRawActive] = useAtom(editorViewOpenedAtom);
     function selectNote() {
       setOpened(null);
+      setRawActive(false);
+
       setSelected(id);
       let onEditing = window.electron.ipcRenderer.send("get-one-note", id);
     window.electron.ipcRenderer.on("one-note", (event, data) => {
       setOpened(data["content"]);
+      setRawActive(true);
       // console.log(open);
     });
       console.log(id);

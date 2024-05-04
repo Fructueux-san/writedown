@@ -1,34 +1,31 @@
 import React, { useState } from "react";
 import "../assets/editor-toolbar.css";
+import { useAtom } from "jotai";
+import { editorViewOpenedAtom } from "../hooks/editor";
 
-export const Toolbar = ({activate}) => {
-  const [rawActive, setRawActive] = useState(true);
-  const [previewActive, setPreviewActive] = useState(false)
+export const Toolbar = () => {
+  const [editorActive, setEditorActive] = useAtom(editorViewOpenedAtom);
 
   const activeRawBtn = () => {
-    if (rawActive){
+    if (editorActive){
       ;
     }else{
-      setPreviewActive(false);
-      setRawActive(true);
-      activate("editor");
+      setEditorActive(true);
     }
   }
 
   const activePreviewBtn = () => {
-    if (previewActive){}
+    if (!editorActive){}
     else {
-      setPreviewActive(true);
-      setRawActive(false);
-      activate("preview");
+      setEditorActive(false);
     }
   }
 
   return (
     <header>
       <div className="btn-bloc">
-        <button className={(rawActive ? 'active' : '')} onClick={activeRawBtn}>Raw</button>
-        <button className={(previewActive ? 'active' : '')} onClick={activePreviewBtn}>Preview</button>
+        <button className={(editorActive ? 'active' : '')} onClick={activeRawBtn}>Raw</button>
+        <button className={(!editorActive ? 'active' : '')} onClick={activePreviewBtn}>Preview</button>
       </div>
       <div className="actions">
 
