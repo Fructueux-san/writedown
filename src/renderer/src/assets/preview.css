@@ -3,14 +3,18 @@
   padding: 7px;
   box-sizing: border-box;
   overflow-y: auto;
+  overflow-x: scroll;
   width: 100%;
   color: #c7ccd6;
   height: 100vh;
   transition: flex 1s;
   transition-timing-function: ease-in-out;
   margin-right: 50px;
-  padding-top: 50px;
+  margin-top: 50px;
   padding-bottom: 150px;
+  display: flex;
+  flex-direction: column;
+  min-width: 600px;
 }
 .preview h1 {
   font-size: 2em;

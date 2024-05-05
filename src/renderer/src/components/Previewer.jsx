@@ -23,7 +23,7 @@ const Preview = ({doc, preview})=>{
 
     return (
         <div className={"preview markdown-body"}>
-            <Markdown remarkPlugins={[remarkGfm, remarkRehype, remarkGemoji, remarkHint, remarkCodeTitle, remarkToc, remarkMath]} rehypePlugins={[rehypeRaw]} components={{
+            <Markdown remarkPlugins={[remarkGfm, remarkRehype, remarkGemoji, remarkHint, remarkMath]} rehypePlugins={[rehypeRaw]} components={{
                 pre: Pre,
                 code(props) {
                     const {children, className, node, ...rest} = props
