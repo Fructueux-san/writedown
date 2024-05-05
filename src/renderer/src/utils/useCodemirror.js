@@ -1,7 +1,5 @@
-import React from "react";
-
 import { useEffect, useState, useRef } from "react";
-import { EditorState } from "@codemirror/state";
+import { EditorState, Text } from "@codemirror/state";
 import { EditorView, keymap, highlightActiveLine, lineNumbers } from '@codemirror/view';
 import { defaultKeymap, historyKeymap, history, indentWithTab } from "@codemirror/commands";
 import { indentOnInput, bracketMatching, continuedIndent, HighlightStyle, syntaxHighlighting } from "@codemirror/language";
@@ -11,6 +9,8 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import { tags } from "@lezer/highlight";
 import { openedObjectAtom, selectedNoteAtom } from "../hooks/editor/index";
 import { useAtom } from "jotai";
+import {throttle} from "lodash";
+
 export const transparentTheme = EditorView.theme({
     '&': {
         backgroundColor: 'transparent !important',
@@ -67,6 +67,18 @@ const theme = EditorView.theme({
     }
 })
 
+function countWords(doc) {
+  let count = 0, iter = doc.iter();
+  while (!iter.next().done) {
+    let inWorld = false;
+    for (let i=0; i<iter.value.length; i++) {
+      let word = /\w/.test(iter.value[i]);
+      if (word && !inWorld) count++;
+      inWorld = word;
+    }
+  }
+  return count;
+}
 const useCodemirror = (props, state) => {
     const refContainer = useRef(null);
     const [editorView, setEditorView] = useState();
@@ -95,12 +107,15 @@ const useCodemirror = (props, state) => {
                 oneDark,
                 transparentTheme,
                 syntaxHighlighting(syntaxHighlight),
-
                 EditorView.lineWrapping,
                 EditorView.updateListener.of(update => {
                     if (update.changes) {
                         onChange && onChange(update.state);
 
+                        console.log("WORDS : ", countWords(update.state.doc));
+                        console.log("LINES ", update.state.doc.lines);
+                        console.log("CURRENT LINE ", update.state.doc.lineAt(view.state.selection.main.head).number);
+                        // console.log("CURRENT COLS ", update.state.doc.lineAt(view.state.selection.main.head));
                         let data = {
                                 id: docIndex,
                                 note: {
@@ -110,7 +125,14 @@ const useCodemirror = (props, state) => {
                                 }
                               }
                       console.log(data);
-                        window.electron.ipcRenderer.send("save-note", data);
+                        throttle(
+                          window.electron.ipcRenderer.send("save-note", data),
+                          3000,
+                          {
+                            leading: false,
+                            trailing: true,
+                          }
+                        );
                         window.electron.ipcRenderer.on("success", (event, message) => {
                             console.log("[SAVING MESSAGE]", message);
                         });
