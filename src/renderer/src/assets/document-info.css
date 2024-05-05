@@ -17,6 +17,7 @@
 .editor-layout .editor-info ul {
   list-style: none;
   text-decoration: none;
+  color: white;
 }
 
 .editor-layout .editor-info ul li span.value {

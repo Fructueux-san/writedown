@@ -7,7 +7,7 @@ import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { tags } from "@lezer/highlight";
-import { openedObjectAtom, selectedNoteAtom } from "../hooks/editor/index";
+import { activeDocInformations, openedObjectAtom, selectedNoteAtom } from "../hooks/editor/index";
 import { useAtom } from "jotai";
 import {throttle} from "lodash";
 
@@ -86,6 +86,7 @@ const useCodemirror = (props, state) => {
 
     const [docIndex] = useAtom(selectedNoteAtom);
     const [docObject] = useAtom(openedObjectAtom);
+    const [docInfo, setDocInfo] = useAtom(activeDocInformations);
 
 
     useEffect(() => {
@@ -111,11 +112,11 @@ const useCodemirror = (props, state) => {
                 EditorView.updateListener.of(update => {
                     if (update.changes) {
                         onChange && onChange(update.state);
-
-                        console.log("WORDS : ", countWords(update.state.doc));
-                        console.log("LINES ", update.state.doc.lines);
-                        console.log("CURRENT LINE ", update.state.doc.lineAt(view.state.selection.main.head).number);
-                        // console.log("CURRENT COLS ", update.state.doc.lineAt(view.state.selection.main.head));
+                        setDocInfo({
+                          words: countWords(update.state.doc),
+                          lines: update.state.doc.lines,
+                          currentLine: update.state.doc.lineAt(view.state.selection.main.head).number
+                        });
                         let data = {
                                 id: docIndex,
                                 note: {
