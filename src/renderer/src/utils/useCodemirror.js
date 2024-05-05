@@ -125,9 +125,11 @@ const useCodemirror = (props, state) => {
                                   updated_at: Date.now(),
                                 }
                               }
-                      console.log(data);
+                          // console.log(data);
                         throttle(
-                          window.electron.ipcRenderer.send("save-note", data),
+                          () => {
+                            window.electron.ipcRenderer.send("save-note", data);
+                          },
                           3000,
                           {
                             leading: false,
