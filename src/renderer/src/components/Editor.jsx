@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useCodemirror from "../utils/useCodemirror";
-import { editor_fulfill } from "../utils/constants";
+import { autoSavingTime, editor_fulfill } from "../utils/constants";
 
 import '../assets/editor.css';
 import { useAtom } from "jotai";
@@ -15,14 +15,16 @@ const Editor = ({doc, onChange}) => {
   const [docObject] = useAtom(openedObjectAtom);
 
   const save = (data) => {
-
-
     window.electron.ipcRenderer.send("save-note", data),
     window.electron.ipcRenderer.on("success", (event, message) => {
       console.log("[SAVING MESSAGE]", message);
     });
 
   }
+
+  const sendSave = useMemo(
+      () => throttle (save, autoSavingTime, {leading: true, trailing: true}), []
+  );
 
   const handleChange = useCallback(
     state => {
@@ -39,14 +41,6 @@ const Editor = ({doc, onChange}) => {
 
     }, []);
 
-    const sendSave = useMemo(
-      () => throttle (save, 3000, {leading: true, trailing: true}), []
-    )
-
-    const change = (state) => {
-
-      setOpenedDoc(state.doc.toString());
-    }
 
    const [refContainer, editorView] = useCodemirror({
     initialDoc: doc,

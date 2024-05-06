@@ -29,6 +29,7 @@ export const notes = [
 
 ];
 
+export const autoSavingTime = 3000
 
 export const editor_fulfill = `
 # Hello universe !

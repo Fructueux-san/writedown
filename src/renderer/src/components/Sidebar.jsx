@@ -15,20 +15,18 @@ const Content = ({id, title, lastEdit}) => {
     const [openedObject, setOpenedObject] = useAtom(openedObjectAtom);
     const [docInfo, setDocInfo] = useAtom(activeDocInformations);
     function selectNote() {
-      setOpened(null);
-      setRawActive(false);
-      setDocInfo(null);
+      if (id !== select) {
+        setOpened(null);
+        setRawActive(false);
+        setDocInfo(null);
 
-      setSelected(id);
-      let onEditing = window.electron.ipcRenderer.send("get-one-note", id);
-    window.electron.ipcRenderer.on("one-note", async (event, data) => {
-
-      setOpenedObject(await data);
-      setOpened(data["content"]);
-      // console.log("ONE NOTE DATA", await data);
-
-    });
-      console.log(id);
+        setSelected(id);
+        let onEditing = window.electron.ipcRenderer.send("get-one-note", id);
+        window.electron.ipcRenderer.on("one-note", async (event, data) => {
+          setOpenedObject(await data);
+          setOpened(data["content"]);
+        });
+      }
     }
     return (
       <li className={(id==select ? "active " : " ")+"content"} onClick={selectNote}>
