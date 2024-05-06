@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "../assets/sidebar.css";
 import {LuFileSignature} from "react-icons/lu";
 import {FaRegTrashCan} from "react-icons/fa6";
 import { formatDateFromMs } from "../utils/helpers";
 import { allNotesAtom, editorViewOpenedAtom, openDoc, openedObjectAtom, selectedNoteAtom, activeDocInformations} from "../hooks/editor";
 import { useAtom } from "jotai";
+import Modal from "./Modal";
 
 
 const Content = ({id, title, lastEdit}) => {
@@ -42,11 +43,19 @@ const Content = ({id, title, lastEdit}) => {
 const SideBar = (props) => {
 
   const [notes, setNotes] = useAtom(allNotesAtom);
+  const [createNoteModal, setCreateNoteModal] = useState(false);
+  const [newNoteTitle, setNewNoteTitle] = useState("");
+  const [modalAdditionalInfo, setModalAdditionalInfo] = useState("");
+
+  function handleNewNoteTitleChange(e) {
+    setNewNoteTitle(e.target.value);
+    setModalAdditionalInfo("");
+  }
 
   return (
     <div className="sidebar">
       <div className="actions">
-        <button>
+        <button onClick={() => setCreateNoteModal(true)}>
           <LuFileSignature size={15} />
         </button>
 
@@ -59,6 +68,22 @@ const SideBar = (props) => {
           notes.map((element, index) => <Content key={element.id} id={element.id} title={element.title} lastEdit={element.updated_at}/>)
         }
       </ul>
+
+      {createNoteModal ?
+        <Modal
+          openModal={createNoteModal}
+          closeModal={() => setCreateNoteModal(false)}
+          action="Créer"
+          title="Nouvelle note"
+          type="success"
+          actionCallback={() => {
+            newNoteTitle != "" ? alert("We're good to go ! ") : setModalAdditionalInfo("Le champs est vide ! ");
+          }}
+        >
+        <input type="text" style={{ backgroundColor:"transparent", color: "white", border: "1px solid #3b3b3b", width: "200px", height: "1.5rem", paddingLeft:"5px", fontSize: "1.2rem" }} onChange={handleNewNoteTitleChange}/>
+        <div className="over-infos" style={{ color: "red" }}>{modalAdditionalInfo}</div>
+        </Modal> : null}
+
     </div>
   );
 

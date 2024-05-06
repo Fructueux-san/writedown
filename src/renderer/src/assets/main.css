@@ -21,3 +21,8 @@ body {
     background-color: #3b3b3b; /* Couleur de la poignée de la scrollbar */
     border-radius: 6px;
 }
+
+/* Inputs */
+textarea:focus, input:focus{
+    outline: none;
+}
