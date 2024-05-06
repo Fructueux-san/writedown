@@ -117,28 +117,6 @@ const useCodemirror = (props, state) => {
                           lines: update.state.doc.lines,
                           currentLine: update.state.doc.lineAt(view.state.selection.main.head).number
                         });
-                        let data = {
-                                id: docIndex,
-                                note: {
-                                  title: docObject.title,
-                                  content: update.state.doc.toString(),
-                                  updated_at: Date.now(),
-                                }
-                              }
-                          // console.log(data);
-                        throttle(
-                          () => {
-                            window.electron.ipcRenderer.send("save-note", data);
-                          },
-                          3000,
-                          {
-                            leading: false,
-                            trailing: true,
-                          }
-                        );
-                        window.electron.ipcRenderer.on("success", (event, message) => {
-                            console.log("[SAVING MESSAGE]", message);
-                        });
                     }
                 }),
             ]
