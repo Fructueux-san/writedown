@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { RiCloseFill, RiCloseCircleLine } from "react-icons/ri";
+import { RiCloseCircleLine } from "react-icons/ri";
+import { BsMarkdown, BsFileEarmarkPdf } from "react-icons/bs";
+
 import "../assets/editor-toolbar.css";
 import { useAtom } from "jotai";
 import { editorViewOpenedAtom, openDoc, selectedNoteAtom } from "../hooks/editor";
@@ -36,8 +38,16 @@ export const Toolbar = () => {
         <button className={(editorActive ? 'active' : '')} onClick={activeRawBtn}>Raw</button>
         <button className={(!editorActive ? 'active' : '')} onClick={activePreviewBtn}>Preview</button>
       </div>
-      <div className="actions">
-        <RiCloseCircleLine size={22} color="white" className="close-btn" title="close" onClick={closeActiveNote}/>
+      <div className="actions" >
+        <button>
+          <BsFileEarmarkPdf size={22} color="white" className="btn"/>
+        </button>
+        <button>
+            <BsMarkdown size={22} color="white" className="btn" />
+        </button>
+        <button onClick={closeActiveNote}>
+          <RiCloseCircleLine size={22} color="white" className="close-btn" title="close"/>
+        </button>
       </div>
     </header>
   );
