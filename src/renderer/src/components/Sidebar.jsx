@@ -118,7 +118,7 @@ const SideBar = (props) => {
       </div>
       <ul className="sidebar-content">
         {
-          notes.map((element, index) => <Content key={element.id} id={element.id} title={element.title} lastEdit={element.updated_at}/>)
+          notes.map((element, index) => <Content key={index} id={element.id} title={element.title} lastEdit={element.updated_at}/>)
         }
       </ul>
 

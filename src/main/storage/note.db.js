@@ -2,10 +2,8 @@
 // var knex = require("./storage").knex;
 import { knex } from "./storage";
 
-export function getAllNotes() {
-  var result = knex("notes").select("*").orderByRaw("created_at DESC");
-  // Remove the content from the list
-  // result.map(({content, ...rest}) => rest);
+export async function getAllNotes() {
+  var result = await knex("notes").select("id", "title", "created_at", "updated_at").orderByRaw("created_at DESC");
   return result;
 }
 

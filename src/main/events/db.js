@@ -3,9 +3,7 @@ import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote } from "..
 
 export const notesEvents = (ipcMain) => {
   ipcMain.on("get-all-notes", async (event, message) => {
-    console.log("GETTING ALL NOTES STORED IN DATABASE");
     var data = await getAllNotes();
-    console.log(data);
     event.sender.send("all-notes", data)
   });
 
