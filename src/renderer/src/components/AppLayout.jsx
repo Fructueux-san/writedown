@@ -5,7 +5,6 @@ import Editor from "./Editor";
 import "../assets/applayout.css";
 import Preview from "./Previewer";
 import { Toolbar } from "./EditorToolbar";
-import { editor_fulfill } from "../utils/constants";
 import { useAtom } from "jotai";
 import { editorViewOpenedAtom, openDoc, selectedNoteAtom } from "../hooks/editor";
 import DefaultLayout from "./DefaultLayout";

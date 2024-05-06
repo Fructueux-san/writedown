@@ -12,7 +12,7 @@ function Modal ({openModal, closeModal, children, action='Test', actionCallback,
   }, [openModal, closeModal]);
 
   return (
-    <dialog ref={ref} className="modal">
+    <dialog ref={ref} className="modal" onClose={closeModal}>
       <div className="title">{title}</div>
       <div className="content">
         { children }

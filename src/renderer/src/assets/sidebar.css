@@ -32,6 +32,10 @@
   border: 1px solid #efefef;
 }
 
+.sidebar .actions button:focus {
+  outline: none;
+}
+
 .sidebar .actions button:hover {
   border-color: orange;
   color: orange;

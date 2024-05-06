@@ -44,6 +44,7 @@ const SideBar = (props) => {
 
   const [notes, setNotes] = useAtom(allNotesAtom);
   const [createNoteModal, setCreateNoteModal] = useState(false);
+  const [deleteNoteModal, setDeleteNoteModal] = useState(false);
   const [newNoteTitle, setNewNoteTitle] = useState("");
   const [modalAdditionalInfo, setModalAdditionalInfo] = useState("");
 
@@ -87,7 +88,7 @@ const SideBar = (props) => {
           <LuFileSignature size={15} />
         </button>
 
-        <button>
+        <button onClick={() => setDeleteNoteModal(true)}>
           <FaRegTrashCan size={15} />
         </button>
       </div>
