@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../assets/sidebar.css";
 import {LuFileSignature} from "react-icons/lu";
 import {FaRegTrashCan} from "react-icons/fa6";
+import { GoAlert } from "react-icons/go";
 import { formatDateFromMs } from "../utils/helpers";
 import { allNotesAtom, editorViewOpenedAtom, openDoc, openedObjectAtom, selectedNoteAtom, activeDocInformations} from "../hooks/editor";
 import { useAtom } from "jotai";
@@ -43,6 +44,7 @@ const Content = ({id, title, lastEdit}) => {
 const SideBar = (props) => {
 
   const [notes, setNotes] = useAtom(allNotesAtom);
+  const [selectedNote, setSelectedNote] = useAtom(selectedNoteAtom);
   const [createNoteModal, setCreateNoteModal] = useState(false);
   const [deleteNoteModal, setDeleteNoteModal] = useState(false);
   const [newNoteTitle, setNewNoteTitle] = useState("");
@@ -71,14 +73,33 @@ const SideBar = (props) => {
           setCreateNoteModal(false);
         });
       // Refresh notes
+      refreshSidebarTrigger();
+    }else {
+      setModalAdditionalInfo("Le champs est vide !");
+    }
+  }
+
+  function deleteNote() {
+    if (selectedNote != null) {
+      window.electron.ipcRenderer.send("delete-note", selectedNote);
+      window.electron.ipcRenderer.on("deletion-successful", async (event, message) => {
+        console.log(message);
+      });
+    }else {
+      console.log("Note not found ! ");
+    }
+    setDeleteNoteModal(false);
+    refreshSidebarTrigger();
+  }
+
+  // This function refresh global state variable and trigger the useEffect here to refresh
+  function refreshSidebarTrigger(){
+      // Refresh notes
         window.electron.ipcRenderer.send("get-all-notes");
         window.electron.ipcRenderer.on("all-notes", (event, data) => {
           console.log(data);
           setNotes(data);
         });
-    }else {
-      setModalAdditionalInfo("Le champs est vide !");
-    }
   }
 
   return (
@@ -87,10 +108,13 @@ const SideBar = (props) => {
         <button onClick={() => setCreateNoteModal(true)}>
           <LuFileSignature size={15} />
         </button>
-
+      {
+        selectedNote != null ?
         <button onClick={() => setDeleteNoteModal(true)}>
           <FaRegTrashCan size={15} />
-        </button>
+        </button> : null
+      }
+
       </div>
       <ul className="sidebar-content">
         {
@@ -112,6 +136,24 @@ const SideBar = (props) => {
           {modalAdditionalInfo}
         </div>
         </Modal> : null}
+
+      {
+        deleteNoteModal && selectedNote != null ?
+          <Modal
+            openModal={deleteNoteModal}
+            closeModal={() => setDeleteNoteModal(false)}
+            action="Supprimer"
+            title="Note suppression"
+            type="danger"
+            actionCallback={deleteNote}
+          >
+          <div style={{ display: "flex", alignItems:"center", justifyContent: "center", gap: "1rem", padding: "10px" }}>
+            <GoAlert size={30} color="red"/>
+            <span>Supprimer cette note. Cette action est irréversible !</span>
+          </div>
+          </Modal> :
+          null
+      }
 
     </div>
   );

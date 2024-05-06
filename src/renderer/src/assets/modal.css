@@ -37,6 +37,7 @@ dialog.modal .btn-row button {
   color: white;
   padding: 5px;
   font-weight: bold;
+  user-select: none;
 }
 
 dialog.modal .btn-row button:hover {

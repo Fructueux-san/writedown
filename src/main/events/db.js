@@ -31,7 +31,7 @@ export const notesEvents = (ipcMain) => {
 
   ipcMain.on("delete-note", async (event, noteId) => {
     await deleteNote(noteId);
-    event.sender.send("success", "Note successfully deleted.");
+    event.sender.send("deletion-successful", "Note successfully deleted.");
   });
 }
 
