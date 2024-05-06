@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/sidebar.css";
 import {LuFileSignature} from "react-icons/lu";
 import {FaRegTrashCan} from "react-icons/fa6";
@@ -52,6 +52,34 @@ const SideBar = (props) => {
     setModalAdditionalInfo("");
   }
 
+  useEffect(() => {
+    console.log("Refreshing sidebar ...");
+  }, [notes]);
+
+  function createNote() {
+    if (newNoteTitle !== "") {
+        let data = {
+          title: newNoteTitle.trim(),
+          content: "",
+          created_at: Date.now(),
+          updated_at: Date.now()
+        };
+        window.electron.ipcRenderer.send("new-note", data);
+        window.electron.ipcRenderer.on("new-note", async (event, message) => {
+          console.log(message);
+          setCreateNoteModal(false);
+        });
+      // Refresh notes
+        window.electron.ipcRenderer.send("get-all-notes");
+        window.electron.ipcRenderer.on("all-notes", (event, data) => {
+          console.log(data);
+          setNotes(data);
+        });
+    }else {
+      setModalAdditionalInfo("Le champs est vide !");
+    }
+  }
+
   return (
     <div className="sidebar">
       <div className="actions">
@@ -76,12 +104,12 @@ const SideBar = (props) => {
           action="Créer"
           title="Nouvelle note"
           type="success"
-          actionCallback={() => {
-            newNoteTitle != "" ? alert("We're good to go ! ") : setModalAdditionalInfo("Le champs est vide ! ");
-          }}
+          actionCallback={createNote}
         >
         <input type="text" style={{ backgroundColor:"transparent", color: "white", border: "1px solid #3b3b3b", width: "200px", height: "1.5rem", paddingLeft:"5px", fontSize: "1.2rem" }} onChange={handleNewNoteTitleChange}/>
-        <div className="over-infos" style={{ color: "red" }}>{modalAdditionalInfo}</div>
+        <div className="over-infos" style={{ color: "red" }}>
+          {modalAdditionalInfo}
+        </div>
         </Modal> : null}
 
     </div>

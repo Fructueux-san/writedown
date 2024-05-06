@@ -3,7 +3,7 @@
 import { knex } from "./storage";
 
 export function getAllNotes() {
-  var result = knex("notes").select("*");
+  var result = knex("notes").select("*").orderByRaw("created_at DESC");
   // Remove the content from the list
   // result.map(({content, ...rest}) => rest);
   return result;

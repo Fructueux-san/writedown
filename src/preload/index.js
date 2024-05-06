@@ -8,6 +8,7 @@ const db = {
   oneNote: (id) => ipcRenderer.send("get-one-note", id),
   deleteOne: (id) => ipcRenderer.send("delete-one", id),
   saveNote: (data) => ipcRenderer.send("save-note", data),
+  newNote: (data) => ipcRenderer.invoke("new-note", data),
 }
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

@@ -9,6 +9,16 @@ export const notesEvents = (ipcMain) => {
     event.sender.send("all-notes", data)
   });
 
+  ipcMain.on("new-note", async (event, data) => {
+    try {
+      console.log("New note creation ");
+      var result = await createNote(data);
+      event.sender.send("new-note", "Note successfully created");
+    }catch (err){
+      event.sender.send("new-note-error", "An error occur when trying to execute this operation.");
+    }
+  });
+
   ipcMain.on("get-one-note", async (event, id) => {
     event.sender.send("one-note", await getNoteInfo(id));
   });
