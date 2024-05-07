@@ -5,6 +5,7 @@ import icon from '../../resources/icon.png?asset';
 import { setupDatabase } from './storage/storage';
 import { notesEvents } from './events/db';
 import { seedNotes } from './storage/seeder';
+import { fsEvents } from './events/fs';
 
 function createWindow() {
   // Create the browser window.
@@ -47,6 +48,7 @@ function createWindow() {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+  return mainWindow;
 }
 
 // This method will be called when Electron has finished
@@ -65,10 +67,11 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+  createWindow();
   setupDatabase();
+  fsEvents(ipcMain);
   // seedNotes();
   notesEvents(ipcMain);
-  createWindow()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

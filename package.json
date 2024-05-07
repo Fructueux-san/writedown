@@ -33,6 +33,7 @@
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
     "assert": "^2.1.0",
+    "buffer": "^6.0.3",
     "github-markdown-css": "^5.5.1",
     "jotai": "^2.8.0",
     "knex": "^3.1.0",
