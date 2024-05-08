@@ -49,6 +49,16 @@ const SideBar = (props) => {
   const [deleteNoteModal, setDeleteNoteModal] = useState(false);
   const [newNoteTitle, setNewNoteTitle] = useState("");
   const [modalAdditionalInfo, setModalAdditionalInfo] = useState("");
+  const [openedDoc, setOpenDoc] = useAtom(openDoc);
+  const [editorViewOpened, setViewOpenedAtom] = useAtom(editorViewOpenedAtom);
+  const [docInfo, setDocInfo] = useAtom(activeDocInformations);
+
+  function reload() {
+    setSelectedNote(null);
+    setOpenDoc(null);
+    setViewOpenedAtom(false);
+    setDocInfo(null);
+  }
 
   function handleNewNoteTitleChange(e) {
     setNewNoteTitle(e.target.value);
@@ -57,7 +67,7 @@ const SideBar = (props) => {
 
   useEffect(() => {
     console.log("Refreshing sidebar ...");
-  }, [notes]);
+  }, [notes, allNotesAtom]);
 
   function createNote() {
     if (newNoteTitle !== "") {
@@ -68,8 +78,8 @@ const SideBar = (props) => {
           updated_at: Date.now()
         };
         window.electron.ipcRenderer.send("new-note", data);
-        window.electron.ipcRenderer.on("new-note", async (event, message) => {
-          console.log(message);
+        window.electron.ipcRenderer.on("new-note", async (event, data) => {
+          console.log(data["message"]);
           setCreateNoteModal(false);
         });
       // Refresh notes
@@ -84,6 +94,8 @@ const SideBar = (props) => {
       window.electron.ipcRenderer.send("delete-note", selectedNote);
       window.electron.ipcRenderer.on("deletion-successful", async (event, message) => {
         console.log(message);
+        setSelectedNote(null);
+        setOpenDoc(null);
       });
     }else {
       console.log("Note not found ! ");

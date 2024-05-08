@@ -8,7 +8,7 @@ export async function getAllNotes() {
 }
 
 export function createNote(note) {
-  return knex("notes").insert(note);
+  return knex("notes").insert(note).returning("*");
 }
 
 export function deleteNote(id) {

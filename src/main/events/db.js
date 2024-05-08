@@ -11,7 +11,7 @@ export const notesEvents = (ipcMain) => {
     try {
       console.log("New note creation ");
       var result = await createNote(data);
-      event.sender.send("new-note", "Note successfully created");
+      event.sender.send("new-note", { data: result, message:"Note successfully created"});
     }catch (err){
       event.sender.send("new-note-error", "An error occur when trying to execute this operation.");
     }
