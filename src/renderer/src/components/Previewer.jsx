@@ -14,7 +14,7 @@ import "../assets/copybutton.css";
 import remarkToc from "remark-toc";
 import remarkRehype from "remark-rehype";
 import remarkMath from "remark-math";
-const Preview = ({doc, preview})=>{
+const Preview = ({doc, previewRef})=>{
 
     const Pre = ({ children }) => <pre className="blog-pre">
         <CodeCopyBtn>{children}</CodeCopyBtn>
@@ -22,7 +22,7 @@ const Preview = ({doc, preview})=>{
     </pre>
 
     return (
-        <div className={"preview markdown-body"}>
+        <div className={"preview markdown-body"} ref={previewRef}>
             <Markdown remarkPlugins={[remarkGfm, remarkRehype, remarkGemoji, remarkHint, remarkMath]} rehypePlugins={[rehypeRaw]} components={{
                 pre: Pre,
                 code(props) {

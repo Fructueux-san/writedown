@@ -9,10 +9,9 @@ export const fsEvents = (ipcMain) => {
     });
 
     if (filePath && !canceled) {
-      fs.writeFile(filePath, message.data, (err) => {
-        if (err) throw err;
-          console.log("The pdf has been saved !");
-      });
+      event.sender.send("pdf-path", filePath);
+    }else {
+      event.sender.send("pdf-path-error", filePath);
     }
   });
 

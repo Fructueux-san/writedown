@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { RiCloseCircleLine } from "react-icons/ri";
 import { BsMarkdown, BsFileEarmarkPdf } from "react-icons/bs";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 import "../assets/editor-toolbar.css";
 import { useAtom } from "jotai";
 import { editorViewOpenedAtom, openDoc, selectedNoteAtom,openedObjectAtom } from "../hooks/editor";
 
-export const Toolbar = () => {
+export const Toolbar = ({previewRef}) => {
   const [editorActive, setEditorActive] = useAtom(editorViewOpenedAtom);
   const [openedNote, setOpenedNote] = useAtom(selectedNoteAtom);
   const [doc, setDoc] = useAtom(openDoc);
@@ -34,12 +36,34 @@ export const Toolbar = () => {
   }
 
   const saveAsPdfFile = async (e) => {
-      const buffer = window.Buffer.of("Hello");
-      window.electron.ipcRenderer.invoke("pdf-on-fs", {
-        data: buffer,
+      window.electron.ipcRenderer.send("pdf-on-fs", {
         id: openedNote,
         title: docInfo.title,
       });
+
+    window.electron.ipcRenderer.on("pdf-path", (event, message) => {
+      const input = previewRef.current;
+      // input.style.color = "black";
+      html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        imgData.fontcolor("black");
+        console.log("TEXT CONTENT")
+        console.log(canvas.textContent.toString());
+        console.log("END TEXT CONTENT");
+        const pdf = new jsPDF('p', 'mm', 'a4', true);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        const ratio = Math.min(pdfWidth/imgWidth, pdfHeight/imgHeight);
+        const imgX = (pdfWidth - imgWidth * ratio) / 2;
+        const imgY = 30
+
+        pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+        pdf.save(message);
+      });
+    });
+    console.log("PDF successfully saved");
   }
 
   const saveAsMd = async (e) => {
@@ -58,9 +82,10 @@ export const Toolbar = () => {
         <button className={(!editorActive ? 'active' : '')} onClick={activePreviewBtn}>Preview</button>
       </div>
       <div className="actions" >
-        <button>
+    {   /*<button>
           <BsFileEarmarkPdf size={22} color="white" className="btn" onClick={saveAsPdfFile}/>
-        </button>
+        </button>*/
+    }
         <button>
             <BsMarkdown size={22} color="white" className="btn" onClick={saveAsMd}/>
         </button>
