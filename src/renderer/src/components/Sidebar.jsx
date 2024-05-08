@@ -10,7 +10,7 @@ import Modal from "./Modal";
 
 
 const Content = ({id, title, lastEdit}) => {
-    // var date = formatDateFromMs(lastEdit);
+    var date = formatDateFromMs(lastEdit);
     const [select, setSelected] = useAtom(selectedNoteAtom);
     const [open, setOpened] = useAtom(openDoc);
     const [rawActive, setRawActive] = useAtom(editorViewOpenedAtom);
@@ -34,7 +34,7 @@ const Content = ({id, title, lastEdit}) => {
       <li className={(id==select ? "active " : " ")+"content"} onClick={selectNote}>
         <div className="title">{title}</div>
         <p>
-          {lastEdit}
+          {date}
         </p>
       </li>
     );
