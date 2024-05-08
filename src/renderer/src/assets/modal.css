@@ -1,8 +1,9 @@
 dialog.modal {
-  position: fixed;
-  top: 45%;
-  left: 45%;
-  transform: translate('-45%', '-45%');
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
   min-width: 250px;
   display: flex;
   align-items: center;
@@ -15,6 +16,8 @@ dialog.modal {
   background-color: rgba(47, 47, 47, 0.8);
   box-shadow: 0.3px 0.2px 5px grey;
   color: white;
+  margin-top: 0;
+  margin-left: 0;
 }
 
 dialog.modal .btn-row {

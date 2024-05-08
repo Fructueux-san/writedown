@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { RiPenNibLine } from "react-icons/ri";
-import "../assets/default-layout.css";
 import { useAtom } from "jotai";
 import { allNotesAtom, selectedNoteAtom } from "../hooks/editor";
 import Modal from "./Modal";
+import "../assets/default-layout.css";
 
 const DefaultLayout = () => {
   const [notes, setNotes] = useAtom(allNotesAtom);
