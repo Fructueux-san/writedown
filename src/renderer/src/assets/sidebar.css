@@ -67,6 +67,18 @@
   font-weight: bold;
 }
 
+.sidebar .sidebar-content .content input.change-title-input {
+  background: transparent;
+  color: white;
+  border-radius: 3px;
+  border: 1px solid #3b3b3b;
+  padding: 5px;
+  font-size: 1rem;
+}
+.sidebar .sidebar-content .content input.change-title-input:focus {
+  outline: none;
+}
+
 .sidebar .sidebar-content .content:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
