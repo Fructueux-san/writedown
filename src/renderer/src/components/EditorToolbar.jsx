@@ -7,12 +7,14 @@ import jsPDF from "jspdf";
 import "../assets/editor-toolbar.css";
 import { useAtom } from "jotai";
 import { editorViewOpenedAtom, openDoc, selectedNoteAtom,openedObjectAtom } from "../hooks/editor";
+import { saveToPdf } from "../utils/helpers";
 
 export const Toolbar = ({previewRef}) => {
   const [editorActive, setEditorActive] = useAtom(editorViewOpenedAtom);
   const [openedNote, setOpenedNote] = useAtom(selectedNoteAtom);
   const [doc, setDoc] = useAtom(openDoc);
   const [docInfo, setDocInfo] = useAtom(openedObjectAtom);
+  const [tagsListOpen, setTagsListOpen] = useState(false);
 
   const activeRawBtn = () => {
     if (editorActive){
@@ -35,6 +37,10 @@ export const Toolbar = ({previewRef}) => {
     setEditorActive(false);
   }
 
+  function toogleTagsList() {
+    setTagsListOpen(!tagsListOpen);
+  }
+
   const saveAsPdfFile = async (e) => {
       window.electron.ipcRenderer.send("pdf-on-fs", {
         id: openedNote,
@@ -43,25 +49,7 @@ export const Toolbar = ({previewRef}) => {
 
     window.electron.ipcRenderer.on("pdf-path", (event, message) => {
       const input = previewRef.current;
-      // input.style.color = "black";
-      html2canvas(input).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        imgData.fontcolor("black");
-        console.log("TEXT CONTENT")
-        console.log(canvas.textContent.toString());
-        console.log("END TEXT CONTENT");
-        const pdf = new jsPDF('p', 'mm', 'a4', true);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const imgWidth = canvas.width;
-        const imgHeight = canvas.height;
-        const ratio = Math.min(pdfWidth/imgWidth, pdfHeight/imgHeight);
-        const imgX = (pdfWidth - imgWidth * ratio) / 2;
-        const imgY = 30
-
-        pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-        pdf.save(message);
-      });
+      saveToPdf(input, message);
     });
     console.log("PDF successfully saved");
   }
@@ -80,12 +68,21 @@ export const Toolbar = ({previewRef}) => {
       <div className="btn-bloc">
         <button className={(editorActive ? 'active' : '')} onClick={activeRawBtn}>Raw</button>
         <button className={(!editorActive ? 'active' : '')} onClick={activePreviewBtn}>Preview</button>
+      <div className="tags-block">
+        <button className="add-tag btn" onClick={toogleTagsList}>Add tag</button>
+        <div className="tags">
+
+        </div>
+        <div className={"tags-list"+(tagsListOpen ? " open " : "")}>
+          Tag list
+        </div>
+      </div>
       </div>
       <div className="actions" >
-    {   /*<button>
-          <BsFileEarmarkPdf size={22} color="white" className="btn" onClick={saveAsPdfFile}/>
-        </button>*/
-    }
+      {   /*<button>
+            <BsFileEarmarkPdf size={22} color="white" className="btn" onClick={saveAsPdfFile}/>
+          </button>*/
+      }
         <button>
             <BsMarkdown size={22} color="white" className="btn" onClick={saveAsMd}/>
         </button>

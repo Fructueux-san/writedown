@@ -36,6 +36,7 @@
   border: 1px solid #3b3b3b;
   padding: 6px;
   border-radius: 5px;
+  user-select: none;
 }
 
 .app-layout .editor-layout header button:hover {
@@ -62,4 +63,36 @@
 }
 .app-layout .editor-layout header .actions button:hover > * {
   color: orange;
+}
+
+.app-layout .editor-layout header .tags-block {
+  display: flex;
+  align-items: start;
+  justify-items: self-start;
+  margin-left: 0;
+}
+.app-layout .editor-layout header .tags-block .tags {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.app-layout .editor-layout header .tags-block .tags-list {
+  position: absolute;
+  top: 50px;
+  height: 0;
+  border: 1px solid #3b3b3b;
+  border-radius: 5px;
+  min-width: 170px;
+  color: white;
+  padding: 7px;
+  display: none;
+  transition: height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.app-layout .editor-layout header .tags-block .tags-list.open {
+  display: block;
+  height: 260px;
 }

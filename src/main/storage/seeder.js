@@ -41,5 +41,8 @@ export async function seedNotes() {
   console.log(await getAllNotes());
 }
 
+export async function notebook() {
+
+}
 // setupDatabase();
 // seedNotes();
