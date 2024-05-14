@@ -19,6 +19,7 @@ export async function setupDatabase() {
           table.increments("id");
           table.string("name").notNullable();
           table.string("description");
+          table.enu('status', ["NORMAL", "TRASH"]).defaultTo("NORMAL");
           table.timestamp("created_at");
           table.timestamp("updated_at");
         });
@@ -33,7 +34,7 @@ export async function setupDatabase() {
             table.string("title");
             table.text("content");
             table.boolean("pinned").defaultTo(false);
-            table.enu('type', ["NORMAL", "TRASH"]).defaultTo("NORMAL");
+            table.enu('status', ["NORMAL", "TRASH", "PINNED"]).defaultTo("NORMAL");
             table.timestamps({useTimestamps: true,  useCamelCase: false});
             table.integer("notebook").references("notebood.id");
           });

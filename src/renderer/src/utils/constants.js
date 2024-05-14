@@ -1,31 +1,53 @@
 
-export const notes = [
+export let notes = [
   {
-    id: 1,
     title: "Hello 👋",
-    lastEditTime: new Date().getTime()
+    content: "Saying hello, from earth",
+    created_at: Date.now(),
+    updated_at: Date.now(),
   },
 
 
   {
-    id: 2,
     title: "Python 🐍 love",
-    lastEditTime: new Date().getTime()
+    content: "# Python is a beautiful programming language.",
+    created_at: Date.now(),
+    updated_at: Date.now(),
   },
 
 
   {
-    id: 3,
     title: "Zuma revenge tips.",
-    lastEditTime: new Date().getTime()
+    content: "# Here is some Zuma revenge cheat code. Win this game quickly.",
+    created_at: Date.now(),
+    updated_at: Date.now(),
   },
 
+  {
+    title: "Error Handling",
+    content: "## Way to solve my day to day bugs challenges. ",
+    created_at: Date.now(),
+    updated_at: Date.now(),
+  },
 
   {
-    id: 4,
-    title: "Error Handling",
-    lastEditTime: new Date().getTime()
-  }
+      content: "# This is some note. Good stuffs are comming",
+      title: "The first note",
+      created_at: Date.now(),
+      updated_at: Date.now()
+    },
+    {
+      content: "## The Pinnapple notes. So many things are done here. ",
+      title: "Pinnapple use for healthcare.",
+      created_at: Date.now(),
+      updated_at: Date.now(),
+    },
+    {
+      content: "# Reconnaisser que Dieu nous a laisser l'intelligence et l'intellect pour transcender. ",
+      title: "Identification à la personnalité",
+      created_at: Date.now(),
+      updated_at: Date.now(),
+    }
 
 ];
 

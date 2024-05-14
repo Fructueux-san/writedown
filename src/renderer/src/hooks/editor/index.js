@@ -1,4 +1,4 @@
-import { atom, useAtom } from "jotai";
+import { atom } from "jotai";
 
 export const selectedNoteAtom = atom(null);
 export const allNotes = [];

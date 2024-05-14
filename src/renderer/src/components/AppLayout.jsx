@@ -9,7 +9,7 @@ import { useAtom } from "jotai";
 import { editorViewOpenedAtom, openDoc, selectedNoteAtom } from "../hooks/editor";
 import DefaultLayout from "./DefaultLayout";
 import DocumentInfo from "./DocumentInfo";
-
+import MainSidebar from "./MainSidebar";
 
 
 const AppLayout = () => {
@@ -23,6 +23,7 @@ const AppLayout = () => {
   }, [noteIndex]);
   return (
     <div className="app-layout">
+      <MainSidebar />
       <SideBar />
       <section className="editor-layout">
         {doc !== null ? <Toolbar previewRef={previewRef}/> : null}

@@ -3,7 +3,7 @@
 import { knex } from "./storage";
 
 export async function getAllNotes() {
-  var result = await knex("notes").select("id", "title", "created_at", "updated_at").orderByRaw("created_at DESC");
+  var result = await knex("notes").select("id", "title", "notebook", "status", "created_at", "updated_at").orderByRaw("created_at DESC");
   return result;
 }
 
@@ -25,10 +25,10 @@ export function updateNote(id, note) {
 
 /**NOTEBOOKS**/
 export function allNotebooks() {
-  return knex("notebooks").select("*").orderByRaw("created_at DESC");
+  return knex("notebooks").select("*").where("status", "NORMAL").orderByRaw("created_at DESC");
 }
-export function createNotebook(note) {
-  return knex("notebooks").insert(note).returning("*");
+export function createNotebook(notebook) {
+  return knex("notebooks").insert(notebook).returning("*");
 }
 
 export function deleteNotebook(id) {
@@ -48,8 +48,8 @@ export function addNoteToNotebook(notebookId, noteId) {
   return knex("notes").where("id", noteId).update({notebook: notebookId}).returning("*");
 }
 
-export function notebookNotes(notebookId) {
-  return knex("notes").where("notebook", notebookId).select("*");
+export async function notebookNotes(notebookId) {
+  return await knex("notes").where("notebook", notebookId).select("*");
 }
 
 export function notebookNotesCount(notebookId) {
@@ -60,7 +60,9 @@ export function notebookNotesCount(notebookId) {
 export function createTag(tag) {
   return knex("tags").insert(tag).returning("*");
 }
-
+export function allTags(){
+  return knex("tags").select("*");
+}
 export function deleteTag(id) {
   return knex("tags").where("id", id).del();
 }
@@ -99,6 +101,7 @@ module.exports = {
   updateTag,
   deleteTag,
   tagInfo,
+  allTags,
   addTagToNote,
   getNoteTags
 };
