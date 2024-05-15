@@ -6,7 +6,7 @@ import { allNotesAtom, editorViewOpenedAtom, openDoc, selectedNoteAtom, activeDo
 import { useAtom } from "jotai";
 import Modal from "./Modal";
 import "../assets/sidebar.css";
-import Content from "./SidebarElement";
+import {Content} from "./SidebarElement";
 
 const SideBar = (props) => {
 
@@ -83,6 +83,7 @@ const SideBar = (props) => {
 
   return (
     <div className="sidebar">
+      <div className="title"></div>
       <div className="actions">
         <button onClick={() => setCreateNoteModal(true)}>
           <LuFileSignature size={15} />

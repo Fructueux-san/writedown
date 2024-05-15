@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { formatDateFromMs } from "../utils/helpers";
 import { allNotesAtom, editorViewOpenedAtom, openDoc, openedObjectAtom, selectedNoteAtom, activeDocInformations} from "../hooks/editor";
 import { useAtom } from "jotai";
-import { formatDateFromMs } from "../utils/helpers";
 import "../assets/sidebar.css";
 
-export default Content = ({id, title, lastEdit}) => {
+export const Content = ({id, title, lastEdit}) => {
     var date = formatDateFromMs(lastEdit);
     const [select, setSelected] = useAtom(selectedNoteAtom);
     const [open, setOpened] = useAtom(openDoc);
