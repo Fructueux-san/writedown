@@ -1,17 +1,21 @@
 import { FaAngleRight, FaBookmark, FaBookAtlas } from "react-icons/fa6";
 import {RiAddCircleLine, RiBookMarkedLine, RiDeleteBin5Line, RiHashtag, RiPriceTag3Line, RiPushpinLine} from "react-icons/ri"
 import "../assets/main-sidebar.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useAtom } from "jotai";
-import { allNoteBooksAtom, allTagsAtom, pinnedNoteAtom } from "../hooks/global";
+import { allNoteBooksAtom, allNotebooksNotesAtom, allTagsAtom, pinnedNoteAtom, selectedNotebookAtom, trashedNotesAtom } from "../hooks/global";
 import { allNotesAtom } from "../hooks/editor";
 
 export default function MainSidebar () {
   const [notebookListOpen, setNotebookListOpen] = useState(true);
-  const [tagListOpen, setTagListOpen] = useState(false);
-  const [notePinnedListOpen, setNotePinnedListOpen] = useState(false);
+  const [selectedNotebook, setSelectedNotebook] = useAtom(selectedNotebookAtom);
   const [newNotebookName, setNewnotebookName] = useState("");
+
+  // Menu active state
+  const [activeSubmenu, setActiveSubmenu] = useState("all-notes");
+
+  const [tagListOpen, setTagListOpen] = useState(false);
 
 
   // Modal states
@@ -22,8 +26,14 @@ export default function MainSidebar () {
   const [notebooksAtom, setNotebooksAtom] = useAtom(allNoteBooksAtom);
   const [tags, setTags] = useAtom(allTagsAtom);
   const [allNotes] = useAtom(allNotesAtom);
+  const [allNotesbookNotes] = useAtom(allNotebooksNotesAtom);
   const [pinned, setPinned] = useAtom(pinnedNoteAtom);
   const [notes, setNotes] = useAtom(allNotesAtom);
+  const [trashedNotes, setTrashedNotes] = useAtom(trashedNotesAtom)
+
+  useEffect(() => {
+    console.log("Main Sidebar Refresh");
+  }, [notebooksAtom, allNotes])
 
   const notebookCreation = () => {
     console.log("Notebook creation button hit");
@@ -51,6 +61,7 @@ export default function MainSidebar () {
   }
 
   const getNotebookNotes = (id) => {
+    setSelectedNotebook(id);
     window.electron.ipcRenderer.send("notebook-notes", id);
     window.electron.ipcRenderer.on("notebook-notes-success", (event, data) => {
       console.log(`Notebook ${id} notes : `, data);
@@ -63,17 +74,22 @@ export default function MainSidebar () {
     window.electron.ipcRenderer.on("all-in-trash", (event, data) => {
       console.log(`Trash notes : `, data);
       setNotes(data);
+      setTrashedNotes(data);
     });
   }
 
+
+
   return (
 <div className="main-sidebar">
-  <div className="main-sidebar-section all-notes">
-    <div className="head"
+  <div className={"main-sidebar-section all-notes "}>
+    <div
+      className={"head " + (activeSubmenu=='all-notes' ? "active " : "")}
       onDoubleClick={() => {
+        setActiveSubmenu("all-notes");
         window.electron.ipcRenderer.send("get-all-notes");
         window.electron.ipcRenderer.on("all-notes", (event, data) => {
-        setNotes(data);
+          setNotes(data);
         });
       }
 
@@ -82,16 +98,18 @@ export default function MainSidebar () {
         <RiHashtag size={20} color="white"/>
         <span className="title">Vos notes</span>
       </div>
-      <span className="counter">{allNotes.length}</span>
+      <span className="counter">{allNotesbookNotes.length}</span>
       <FaAngleRight color="white" className="right-angle-icon" />
     </div>
   </div>
   <div className="main-sidebar-section pin">
-    <div className="head" onDoubleClick={() => {
-      window.electron.ipcRenderer.send("pinned-notes", null);
-      window.electron.ipcRenderer.on("pinned-notes-success", (event, data) => {
+    <div className={"head"+ (activeSubmenu=='pinned' ? " active" : "")}
+      onDoubleClick={() => {
+        setActiveSubmenu("pinned");
+        window.electron.ipcRenderer.send("pinned-notes", null);
+        window.electron.ipcRenderer.on("pinned-notes-success", (event, data) => {
           setNotes(data);
-      });
+        });
     }}>
       <div className="leading">
         <RiPushpinLine size={20} color="white"/>
@@ -106,7 +124,8 @@ export default function MainSidebar () {
 
 
   <div className="main-sidebar-section notebooks">
-    <div className="head" onDoubleClick={() => setNotebookListOpen(!notebookListOpen)}>
+    <div className={"head"+ (activeSubmenu=='notebooks' ? " active" : "")}
+      onDoubleClick={() => {setNotebookListOpen(!notebookListOpen); setActiveSubmenu("notebooks");} }>
       <div className="leading">
         <RiBookMarkedLine size={20} color="white"/>
         <span className="title">Votre carnet</span>
@@ -135,12 +154,12 @@ export default function MainSidebar () {
   </div>
 
   <div className="main-sidebar-section trash">
-    <div className="head" onDoubleClick={() => allInTrash()}>
+    <div className={"head"+ (activeSubmenu=='trash' ? " active" : "")} onDoubleClick={() => {setSelectedNotebook(null); allInTrash(); setActiveSubmenu("trash")}}>
       <div className="leading">
         <RiDeleteBin5Line size={20} color="white"/>
         <span className="title">Corbeille</span>
       </div>
-      <span className="counter">0</span>
+      <span className="counter">{trashedNotes.length}</span>
     </div>
     <div className="content">
 

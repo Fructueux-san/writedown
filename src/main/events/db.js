@@ -75,6 +75,7 @@ export const notesEvents = (ipcMain) => {
 
   ipcMain.on("all-in-trash", async (event, message) => {
     let notes = await allTrashedNotes();
+    console.log(notes);
     event.sender.send("all-in-trash", notes);
   });
 
