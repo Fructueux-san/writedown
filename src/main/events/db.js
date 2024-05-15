@@ -1,5 +1,5 @@
 // const notes = require("../storage/note.db");
-import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes, allTrashedNotes } from "../storage/note.db";
+import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes, allTrashedNotes, getPinnedNotes } from "../storage/note.db";
 
 export const notesEvents = (ipcMain) => {
   ipcMain.on("get-all-notes", async (event, message) => {
@@ -33,14 +33,8 @@ export const notesEvents = (ipcMain) => {
   });
 
   ipcMain.on("pinned-notes", async(event, message) => {
-    let notes = await getAllNotes();
-    let pinned = [];
-    notes.forEach(element => {
-      if (element.status == "PINNED") {
-        pinned.push(element)
-      }
-    });
-    event.sender.send("pinned-notes-success", pinned);
+    let notes = await getPinnedNotes();
+    event.sender.send("pinned-notes-success", notes);
   });
 
 
@@ -63,7 +57,6 @@ export const notesEvents = (ipcMain) => {
       for (let i=0; i< notebooks.length; i++) {
         let notes = await notebookNotes(notebooks[i].id);
         notebooks[i].notes_count = notes.length;
-        console.log(notebooks[i]);
       }
       event.sender.send("all-notebooks-success", notebooks);
   });

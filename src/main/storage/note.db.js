@@ -27,6 +27,10 @@ export function allTrashedNotes() {
   return knex("notes").where("status", "TRASH").select("id", "title", "notebook", "status", "created_at", "updated_at");
 }
 
+export function getPinnedNotes() {
+  return knex("notes").select("id", "title", "notebook", "status", "created_at", "updated_at").where("status", "PINNED");
+}
+
 /**NOTEBOOKS**/
 export function allNotebooks() {
   return knex("notebooks").select("*").where("status", "NORMAL").orderByRaw("created_at DESC");
@@ -94,6 +98,7 @@ module.exports = {
   getNoteInfo,
   updateNote,
   allTrashedNotes,
+  getPinnedNotes,
   allNotebooks,
   createNotebook,
   deleteNotebook,
