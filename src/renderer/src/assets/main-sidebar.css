@@ -90,6 +90,13 @@
   justify-content: space-between;
   padding: 5px;
   margin: 0;
+  cursor: pointer;
+}
+
+.main-sidebar .main-sidebar-section.notebooks .content ul li .notebook {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .main-sidebar .main-sidebar-section.notebooks .content ul li .counter {

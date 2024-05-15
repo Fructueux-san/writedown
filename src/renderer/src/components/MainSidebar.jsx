@@ -23,8 +23,7 @@ export default function MainSidebar () {
   const [tags, setTags] = useAtom(allTagsAtom);
   const [allNotes] = useAtom(allNotesAtom);
   const [pinned, setPinned] = useAtom(pinnedNoteAtom);
-
-
+  const [notes, setNotes] = useAtom(allNotesAtom);
 
   const notebookCreation = () => {
     console.log("Notebook creation button hit");
@@ -51,10 +50,34 @@ export default function MainSidebar () {
     setModalAdditionalInfo("");
   }
 
+  const getNotebookNotes = (id) => {
+    window.electron.ipcRenderer.send("notebook-notes", id);
+    window.electron.ipcRenderer.on("notebook-notes-success", (event, data) => {
+      console.log(`Notebook ${id} notes : `, data);
+      setNotes(data);
+    });
+  }
+
+  const allInTrash = () => {
+    window.electron.ipcRenderer.send("all-in-trash", null);
+    window.electron.ipcRenderer.on("all-in-trash", (event, data) => {
+      console.log(`Trash notes : `, data);
+      setNotes(data);
+    });
+  }
+
   return (
 <div className="main-sidebar">
   <div className="main-sidebar-section all-notes">
-    <div className="head">
+    <div className="head"
+      onDoubleClick={() => {
+        window.electron.ipcRenderer.send("get-all-notes");
+        window.electron.ipcRenderer.on("all-notes", (event, data) => {
+        setNotes(data);
+        });
+      }
+
+      }>
       <div className="leading">
         <RiHashtag size={20} color="white"/>
         <span className="title">Vos notes</span>
@@ -64,7 +87,12 @@ export default function MainSidebar () {
     </div>
   </div>
   <div className="main-sidebar-section pin">
-    <div className="head">
+    <div className="head" onDoubleClick={() => {
+      window.electron.ipcRenderer.send("pinned-notes", null);
+      window.electron.ipcRenderer.on("pinned-notes-success", (event, data) => {
+          setNotes(data);
+      });
+    }}>
       <div className="leading">
         <RiPushpinLine size={20} color="white"/>
         <span className="title">Pinned</span>
@@ -91,7 +119,7 @@ export default function MainSidebar () {
           notebooksAtom != null ?
             notebooksAtom.map(element => {
               return (
-                    <li key={element.id}>
+                    <li key={element.id} onDoubleClick={() =>getNotebookNotes(element.id)}>
                       <div className="notebook">
                         <FaAngleRight size={12}/>
                         <span className="notebook-name">{element.name}</span>
@@ -107,7 +135,7 @@ export default function MainSidebar () {
   </div>
 
   <div className="main-sidebar-section trash">
-    <div className="head">
+    <div className="head" onDoubleClick={() => allInTrash()}>
       <div className="leading">
         <RiDeleteBin5Line size={20} color="white"/>
         <span className="title">Corbeille</span>

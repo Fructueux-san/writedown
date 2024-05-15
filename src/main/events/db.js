@@ -1,5 +1,5 @@
 // const notes = require("../storage/note.db");
-import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes } from "../storage/note.db";
+import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes, allTrashedNotes } from "../storage/note.db";
 
 export const notesEvents = (ipcMain) => {
   ipcMain.on("get-all-notes", async (event, message) => {
@@ -66,6 +66,16 @@ export const notesEvents = (ipcMain) => {
         console.log(notebooks[i]);
       }
       event.sender.send("all-notebooks-success", notebooks);
+  });
+
+  ipcMain.on("notebook-notes", async (event, id) => {
+    let notes = await notebookNotes(id);
+    event.sender.send("notebook-notes-success", notes);
+  });
+
+  ipcMain.on("all-in-trash", async (event, message) => {
+    let notes = await allTrashedNotes();
+    event.sender.send("all-in-trash", notes);
   });
 
 

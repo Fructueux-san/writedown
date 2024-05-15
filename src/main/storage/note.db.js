@@ -3,7 +3,7 @@
 import { knex } from "./storage";
 
 export async function getAllNotes() {
-  var result = await knex("notes").select("id", "title", "notebook", "status", "created_at", "updated_at").orderByRaw("created_at DESC");
+  var result = await knex("notes").select("id", "title", "notebook", "status", "created_at", "updated_at").where("status", "NORMAL").orderByRaw("created_at DESC");
   return result;
 }
 
@@ -21,6 +21,10 @@ export function getNoteInfo(id) {
 
 export function updateNote(id, note) {
   return knex("notes").where("id", id).update(note);
+}
+
+export function allTrashedNotes() {
+  return knex("notes").where("status", "TRASH").select("id", "title", "notebook", "status", "created_at", "updated_at");
 }
 
 /**NOTEBOOKS**/
@@ -49,7 +53,7 @@ export function addNoteToNotebook(notebookId, noteId) {
 }
 
 export async function notebookNotes(notebookId) {
-  return await knex("notes").where("notebook", notebookId).select("*");
+  return await knex("notes").where("notebook", notebookId).andWhere("status", "NORMAL").select("*");
 }
 
 export function notebookNotesCount(notebookId) {
@@ -89,6 +93,7 @@ module.exports = {
   deleteNote,
   getNoteInfo,
   updateNote,
+  allTrashedNotes,
   allNotebooks,
   createNotebook,
   deleteNotebook,
