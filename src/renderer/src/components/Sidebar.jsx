@@ -7,6 +7,8 @@ import { useAtom } from "jotai";
 import Modal from "./Modal";
 import "../assets/sidebar.css";
 import {Content} from "./SidebarElement";
+import { RiBook2Line, RiDeleteBin5Fill, RiDeleteBin5Line, RiPushpinLine } from "react-icons/ri";
+import { sidebarTitleAtom } from "../hooks/global";
 
 const SideBar = (props) => {
 
@@ -19,6 +21,7 @@ const SideBar = (props) => {
   const [openedDoc, setOpenDoc] = useAtom(openDoc);
   const [editorViewOpened, setViewOpenedAtom] = useAtom(editorViewOpenedAtom);
   const [docInfo, setDocInfo] = useAtom(activeDocInformations);
+  const [sidebarTitle] = useAtom(sidebarTitleAtom);
 
   function reload() {
     setSelectedNote(null);
@@ -83,7 +86,16 @@ const SideBar = (props) => {
 
   return (
     <div className="sidebar">
-      <div className="title"></div>
+      <div className="head">
+        <div className="title">{sidebarTitle}</div>
+        <span className="icon">
+
+        {
+          sidebarTitle == "Pinned notes" ?
+            <RiPushpinLine size={20} color="orange"/> : sidebarTitle == 'All notes' ? <RiBook2Line size={20} color="orange"  /> : sidebarTitle == "Trash" ? <RiDeleteBin5Line size={20} color="orange" /> : null
+        }
+        </span>
+      </div>
       <div className="actions">
         <button onClick={() => setCreateNoteModal(true)}>
           <LuFileSignature size={15} />

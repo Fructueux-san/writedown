@@ -16,6 +16,18 @@
   padding-bottom: 80px;
 }
 
+.sidebar .head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.sidebar .head .title {
+  color: white;
+  size: 1.3rem;
+  font-weight: bold;
+}
 .sidebar .actions {
   margin: 1rem;
   display: flex;

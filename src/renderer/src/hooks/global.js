@@ -18,3 +18,5 @@ export const pinnedNoteAtom = atom([]);
 
 // Notes in trash
 export const trashedNotesAtom = atom([]);
+
+export const sidebarTitleAtom = atom("All notes");
