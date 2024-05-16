@@ -3,7 +3,7 @@
   * according to the selected menu/submenu in the sidebar
 */
 import { useAtom } from "jotai";
-import { RiUnpinLine } from "react-icons/ri";
+import { RiPushpinLine, RiRecycleFill, RiRefreshLine, RiUnpinLine } from "react-icons/ri";
 import { selectedNoteAtom } from "../hooks/editor";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { LuFileSignature } from "react-icons/lu";
@@ -46,10 +46,46 @@ export const AllNotesActions = ({createNoteModal, deleteNoteModal}) => {
   )
 }
 
-export const trashNotesActions = (props) => {
+export const TrashNotesActions = (props) => {
+  const [selectedNote] = useAtom(selectedNoteAtom);
+  return (
+    <>
+    <button>
+    <RiRecycleFill size={15}/>
+    </button>
+    <div className="section-2">
 
+      {
+        selectedNote ? <button>
+        <RiRefreshLine size={15} />
+        </button> : null
+      }
+      {
+        selectedNote ? <button><FaRegTrashCan size={15} /></button> : null
+      }
+    </div>
+
+    </>
+  );
 }
 
-export const notebookActions = (props) => {
+export const NotebookActions = ({createNoteModal, deleteNoteModal}) => {
 
+  const [selectedNote] = useAtom(selectedNoteAtom);
+  return (
+    <>
+      <button onClick={() => createNoteModal(true)}>
+        <LuFileSignature size={15} />
+      </button>
+      {
+        selectedNote ?
+        <>
+          <button><RiPushpinLine /> </button>
+          <button onClick={() => deleteNoteModal(true)}>
+            <FaRegTrashCan size={15} />
+          </button>
+        </> : null
+      }
+    </>
+  );
 }

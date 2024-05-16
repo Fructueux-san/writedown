@@ -9,7 +9,7 @@ import "../assets/sidebar.css";
 import {Content} from "./SidebarElement";
 import { RiBook2Line, RiDeleteBin5Fill, RiDeleteBin5Line, RiPushpinLine } from "react-icons/ri";
 import { sidebarTitleAtom } from "../hooks/global";
-import { AllNotesActions, PinnedNotesAction } from "./SidebarActions";
+import { AllNotesActions, NotebookActions, PinnedNotesAction, TrashNotesActions } from "./SidebarActions";
 
 const SideBar = (props) => {
 
@@ -98,8 +98,7 @@ const SideBar = (props) => {
         </span>
       </div>
       <div className="actions">
-        {sidebarTitle == 'Pinned notes' ? <PinnedNotesAction /> : null}
-        {sidebarTitle == 'All notes' ? <AllNotesActions createNoteModal={setCreateNoteModal} deleteNoteModal={setDeleteNoteModal}/> : null }
+        {sidebarTitle == 'Pinned notes' ? <PinnedNotesAction /> : sidebarTitle == 'All notes' ? <AllNotesActions createNoteModal={setCreateNoteModal} deleteNoteModal={setDeleteNoteModal}/> : sidebarTitle == "Trash" ? <TrashNotesActions /> : <NotebookActions createNoteModal={setCreateNoteModal} deleteNoteModal={setDeleteNoteModal} /> }
       </div>
       <ul className="sidebar-content">
         {
