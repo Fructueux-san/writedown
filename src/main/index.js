@@ -21,6 +21,7 @@ function createWindow() {
     darkTheme: true,
     resizable: true,
     transparent: true,
+    title: "Writedown",
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
