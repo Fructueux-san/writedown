@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { formatDateFromMs } from "../utils/helpers";
 import { allNotesAtom, editorViewOpenedAtom, openDoc, openedObjectAtom, selectedNoteAtom, activeDocInformations} from "../hooks/editor";
 import { useAtom } from "jotai";
 import "../assets/sidebar.css";
+import { RiBookMarkedLine } from "react-icons/ri";
+import { allNoteBooksAtom } from "../hooks/global";
 
-export const Content = ({id, title, lastEdit}) => {
+export const Content = ({id, title, lastEdit, notebookId}) => {
     var date = formatDateFromMs(lastEdit);
     const [select, setSelected] = useAtom(selectedNoteAtom);
     const [open, setOpened] = useAtom(openDoc);
@@ -16,6 +18,16 @@ export const Content = ({id, title, lastEdit}) => {
     const [changeTitle, setChangeTitle] = useState(false);
     const [newTitle, setNewTitle] = useState("");
     const [newTitleinputStyle, setNewTitleInputStyle] = useState("1px solid red");
+
+    const [notebooks] = useAtom(allNoteBooksAtom);
+
+    function notebookInformation(id) {
+      for (let i=0; i<notebooks.length; i++) {
+        if (notebooks[i].id == id) {
+          return notebooks[i];
+        }
+      }
+    }
 
     useEffect(() => {
       if (newTitle !== "") {
@@ -84,8 +96,8 @@ export const Content = ({id, title, lastEdit}) => {
             /> :
             <div className="title" onDoubleClick={() => setChangeTitle(true)}>{title}</div>
         }
-
-        <p>
+        <p className="notebook">{notebookId ? <> <RiBookMarkedLine size={20} /><span>{notebookInformation(notebookId).name}</span> </>: null}</p>
+        <p className="note-date">
           {date}
         </p>
       </li>

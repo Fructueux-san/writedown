@@ -95,6 +95,15 @@
 .sidebar .sidebar-content .content:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
+.sidebar .sidebar-content .note-date {
+  font-size: 0.7rem;
+}
+.sidebar .sidebar-content .notebook {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.8);
+}
 
 .sidebar .sidebar-content .content.active {
   background-color: rgba(255, 255, 255, 0.2);
