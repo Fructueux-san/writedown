@@ -98,7 +98,7 @@ export const Content = ({id, title, lastEdit, notebookId}) => {
               }
               style={{ border: newTitleinputStyle }}
             /> :
-            <div className="title" onDoubleClick={() => setChangeTitle(true)}>{title}</div>
+            <div className={"title" + (select==id ? " active" : "")} onDoubleClick={() => setChangeTitle(true)}>{title}</div>
         }
         <p className="notebook">{notebookId ? <> <RiBookMarkedLine size={20} /><span>{notebookInformation(notebookId).name}</span> </>: null}</p>
         <p className="note-date">

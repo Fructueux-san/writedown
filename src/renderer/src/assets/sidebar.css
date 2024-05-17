@@ -79,6 +79,9 @@
 .sidebar .sidebar-content .content .title {
   font-weight: bold;
 }
+.sidebar .sidebar-content .content .title.active {
+  color: orange;
+}
 
 .sidebar .sidebar-content .content input.change-title-input {
   background: transparent;

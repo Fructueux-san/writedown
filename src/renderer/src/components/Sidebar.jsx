@@ -98,7 +98,16 @@ const SideBar = (props) => {
         </span>
       </div>
       <div className="actions">
-        {sidebarTitle == 'Pinned notes' ? <PinnedNotesAction /> : sidebarTitle == 'All notes' ? <AllNotesActions createNoteModal={setCreateNoteModal} deleteNoteModal={setDeleteNoteModal}/> : sidebarTitle == "Trash" ? <TrashNotesActions /> : <NotebookActions createNoteModal={setCreateNoteModal} deleteNoteModal={setDeleteNoteModal} /> }
+        {
+          sidebarTitle == 'Pinned notes' ? <PinnedNotesAction /> :
+          sidebarTitle == 'All notes' ?
+            <AllNotesActions
+              createNoteModal={setCreateNoteModal}
+              deleteNoteModal={setDeleteNoteModal}
+            /> :
+          sidebarTitle == "Trash" ? <TrashNotesActions /> :
+          <NotebookActions createNoteModal={setCreateNoteModal} deleteNoteModal={setDeleteNoteModal} />
+        }
       </div>
       <ul className="sidebar-content">
         {
