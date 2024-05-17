@@ -22,10 +22,14 @@ export const Content = ({id, title, lastEdit, notebookId}) => {
     const [notebooks] = useAtom(allNoteBooksAtom);
 
     function notebookInformation(id) {
-      for (let i=0; i<notebooks.length; i++) {
-        if (notebooks[i].id == id) {
-          return notebooks[i];
+      if (id != null) {
+        for (let i=0; i<notebooks.length; i++) {
+          if (notebooks[i].id == id) {
+            return notebooks[i];
+          }
         }
+      }else {
+        return null;
       }
     }
 
