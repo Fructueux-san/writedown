@@ -88,7 +88,7 @@ const SideBar = (props) => {
   return (
     <div className="sidebar">
       <div className="head">
-        <div className="title">{sidebarTitle}</div>
+        <div className="title" style={{ color: "orange" }}>{sidebarTitle}</div>
         <span className="icon">
 
         {
