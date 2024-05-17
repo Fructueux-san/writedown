@@ -22,7 +22,7 @@ export const Content = ({id, title, lastEdit, notebookId}) => {
     const [notebooks] = useAtom(allNoteBooksAtom);
 
     function notebookInformation(id) {
-      if (id != null) {
+      if (id != null && notebooks != null) {
         for (let i=0; i<notebooks.length; i++) {
           if (notebooks[i].id == id) {
             return notebooks[i];
@@ -100,7 +100,11 @@ export const Content = ({id, title, lastEdit, notebookId}) => {
             /> :
             <div className={"title" + (select==id ? " active" : "")} onDoubleClick={() => setChangeTitle(true)}>{title}</div>
         }
-        <p className="notebook">{notebookId ? <> <RiBookMarkedLine size={20} /><span>{notebookInformation(notebookId).name}</span> </>: null}</p>
+        <p className="notebook">
+          {
+            notebookId ? <><RiBookMarkedLine size={20} /><span>{notebooks && notebookId ? notebookInformation(notebookId).name : null}</span> </>: null
+          }
+        </p>
         <p className="note-date">
           {date}
         </p>

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import AppLayout from "./components/AppLayout";
 import { atom, useAtom } from "jotai";
-import { allNotesAtom } from "./hooks/editor";
-import { allNoteBooksAtom, allNotebooksNotesAtom, allTagsAtom, pinnedNoteAtom, trashedNotesAtom } from "./hooks/global";
+import { allNotesAtom, selectedNoteAtom } from "./hooks/editor";
+import { allNoteBooksAtom, allNotebooksNotesAtom, allTagsAtom, pinnedNoteAtom, reloadAtom, trashedNotesAtom } from "./hooks/global";
 
 // const selectedNoteAtom = atom(null);
 // const allNotesAtom = atom([]);
@@ -14,7 +14,9 @@ const  App = () => {
   const [tags, setTags] = useAtom(allTagsAtom);
   const [pinned, setPinned] = useAtom(pinnedNoteAtom);
   const [notesbookNotesAtom, setNotesbookNotesAtom] = useAtom(allNotebooksNotesAtom);
-  const [trashedNotes, setTrashedNotes] = useAtom(trashedNotesAtom)
+  const [trashedNotes, setTrashedNotes] = useAtom(trashedNotesAtom);
+  const [selectedNote] = useAtom(selectedNoteAtom);
+  const [reload] = useAtom(reloadAtom);
   useEffect(()=>{
     //Get all notes from backend
     window.electron.ipcRenderer.send("get-all-notes");
@@ -51,6 +53,10 @@ const  App = () => {
     });
 
   }, []);
+
+  useEffect(() => {
+    console.log("Refreshing main");
+  }, [selectedNote, reload]);
 
 
   return (

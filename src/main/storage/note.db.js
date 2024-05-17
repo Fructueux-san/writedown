@@ -3,7 +3,7 @@
 import { knex } from "./storage";
 
 export async function getAllNotes() {
-  var result = await knex("notes").select("id", "title", "notebook", "status", "created_at", "updated_at").where("status", "NORMAL").orderByRaw("created_at DESC");
+  var result = await knex("notes").select("id", "title", "notebook", "status", "created_at", "updated_at").where("status", "NORMAL").orWhere("status", "PINNED").orderByRaw("created_at DESC");
   return result;
 }
 

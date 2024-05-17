@@ -32,6 +32,16 @@ export const notesEvents = (ipcMain) => {
     event.sender.send("deletion-successful", "Note successfully deleted.");
   });
 
+  ipcMain.on("move-to-trash", async (event, id) => {
+    let new_state = {
+      status: "TRASH"
+    }
+    console.log("Moving to trash", new_state);
+    let data = await updateNote(id, new_state);
+    event.sender.send("move-to-trash-success", "successfully moved to trash.");
+    console.log("Move to trash db log", data);
+  });
+
   ipcMain.on("pinned-notes", async(event, message) => {
     let notes = await getPinnedNotes();
     event.sender.send("pinned-notes-success", notes);
@@ -68,7 +78,7 @@ export const notesEvents = (ipcMain) => {
 
   ipcMain.on("all-in-trash", async (event, message) => {
     let notes = await allTrashedNotes();
-    console.log(notes);
+    // console.log(notes);
     event.sender.send("all-in-trash", notes);
   });
 

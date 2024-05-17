@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useAtom } from "jotai";
 import { allNoteBooksAtom, allNotebooksNotesAtom, allTagsAtom, pinnedNoteAtom, selectedNotebookAtom, sidebarTitleAtom, trashedNotesAtom } from "../hooks/global";
-import { allNotesAtom } from "../hooks/editor";
+import { allNotesAtom, selectedNoteAtom } from "../hooks/editor";
 
 export default function MainSidebar () {
   const [notebookListOpen, setNotebookListOpen] = useState(true);
@@ -25,16 +25,16 @@ export default function MainSidebar () {
   // Atoms
   const [notebooksAtom, setNotebooksAtom] = useAtom(allNoteBooksAtom);
   const [tags, setTags] = useAtom(allTagsAtom);
-  const [allNotes] = useAtom(allNotesAtom);
   const [allNotesbookNotes] = useAtom(allNotebooksNotesAtom);
   const [pinned, setPinned] = useAtom(pinnedNoteAtom);
   const [notes, setNotes] = useAtom(allNotesAtom);
   const [trashedNotes, setTrashedNotes] = useAtom(trashedNotesAtom);
   const [sidebarTitle, setSidebarTitle] = useAtom(sidebarTitleAtom);
+  const [selectedNote] = useAtom(selectedNoteAtom);
 
   useEffect(() => {
     console.log("Main Sidebar Refresh");
-  }, [notebooksAtom, allNotes])
+  }, [notebooksAtom, notes, pinned, trashedNotes, tags, selectedNote])
 
   const notebookCreation = () => {
     console.log("Notebook creation button hit");

@@ -8,7 +8,7 @@ import Modal from "./Modal";
 import "../assets/sidebar.css";
 import {Content} from "./SidebarElement";
 import { RiBook2Line, RiDeleteBin5Fill, RiDeleteBin5Line, RiPushpinLine } from "react-icons/ri";
-import { sidebarTitleAtom } from "../hooks/global";
+import { reloadAtom, sidebarTitleAtom, trashedNotesAtom } from "../hooks/global";
 import { AllNotesActions, NotebookActions, PinnedNotesAction, TrashNotesActions } from "./SidebarActions";
 
 const SideBar = (props) => {
@@ -23,13 +23,18 @@ const SideBar = (props) => {
   const [editorViewOpened, setViewOpenedAtom] = useAtom(editorViewOpenedAtom);
   const [docInfo, setDocInfo] = useAtom(activeDocInformations);
   const [sidebarTitle] = useAtom(sidebarTitleAtom);
+  const [trashedNotes, setTrashedNotes] = useAtom(trashedNotesAtom);
+  const [reload, setReload] = useAtom(reloadAtom);
 
-  function reload() {
-    setSelectedNote(null);
-    setOpenDoc(null);
-    setViewOpenedAtom(false);
-    setDocInfo(null);
-  }
+  // function reload() {
+  //   setSelectedNote(null);
+  //   setOpenDoc(null);
+  //   setViewOpenedAtom(false);
+  //   setDocInfo(null);
+  // }
+  //
+
+
 
   function handleNewNoteTitleChange(e) {
     setNewNoteTitle(e.target.value);
@@ -60,11 +65,12 @@ const SideBar = (props) => {
     }
   }
 
-  function deleteNote() {
+  function moteToTrash() {
     if (selectedNote != null) {
-      window.electron.ipcRenderer.send("delete-note", selectedNote);
-      window.electron.ipcRenderer.on("deletion-successful", async (event, message) => {
-        console.log(message);
+      window.electron.ipcRenderer.send("move-to-trash", selectedNote);
+      console.log("Move to trash ");
+      window.electron.ipcRenderer.on("move-to-tash-success", async (event, message) => {
+        console.log("Move to trash ok. ");
         setSelectedNote(null);
         setOpenDoc(null);
       });
@@ -77,12 +83,11 @@ const SideBar = (props) => {
 
   // This function refresh global state variable and trigger the useEffect here to refresh
   function refreshSidebarTrigger(){
-      // Refresh notes
         window.electron.ipcRenderer.send("get-all-notes");
-        window.electron.ipcRenderer.on("all-notes", (event, data) => {
-          console.log(data);
-          setNotes(data);
-        });
+        setNotes(notes);
+        window.electron.ipcRenderer.send("all-in-trash", null);
+        window.electron.ipcRenderer.send("all-notebooks");
+        // setReload(!reload);
   }
 
   return (
@@ -142,10 +147,10 @@ const SideBar = (props) => {
           <Modal
             openModal={deleteNoteModal}
             closeModal={() => setDeleteNoteModal(false)}
-            action="Supprimer"
+            action="Mettre à la corbeille"
             title="Note suppression"
             type="danger"
-            actionCallback={deleteNote}
+            actionCallback={moteToTrash}
           >
           <div style={{ display: "flex", alignItems:"center", justifyContent: "center", gap: "1rem", padding: "10px" }}>
             <GoAlert size={30} color="red"/>

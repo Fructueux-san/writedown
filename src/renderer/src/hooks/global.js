@@ -20,3 +20,4 @@ export const pinnedNoteAtom = atom([]);
 export const trashedNotesAtom = atom([]);
 
 export const sidebarTitleAtom = atom("All notes");
+export const reloadAtom = atom(true);
