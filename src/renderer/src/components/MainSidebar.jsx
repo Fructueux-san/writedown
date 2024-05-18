@@ -4,7 +4,7 @@ import "../assets/main-sidebar.css";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useAtom } from "jotai";
-import { allNoteBooksAtom, allNotebooksNotesAtom, allTagsAtom, pinnedNoteAtom, selectedNotebookAtom, sidebarTitleAtom, trashedNotesAtom } from "../hooks/global";
+import { allNoteBooksAtom, allNotebooksNotesAtom, allTagsAtom, pinnedNoteAtom, reloadAtom, selectedNotebookAtom, sidebarTitleAtom, trashedNotesAtom } from "../hooks/global";
 import { allNotesAtom, selectedNoteAtom } from "../hooks/editor";
 
 export default function MainSidebar () {
@@ -31,10 +31,11 @@ export default function MainSidebar () {
   const [trashedNotes, setTrashedNotes] = useAtom(trashedNotesAtom);
   const [sidebarTitle, setSidebarTitle] = useAtom(sidebarTitleAtom);
   const [selectedNote] = useAtom(selectedNoteAtom);
+  const [reload] = useAtom(reloadAtom);
 
   useEffect(() => {
     console.log("Main Sidebar Refresh");
-  }, [notebooksAtom, notes, pinned, trashedNotes, tags, selectedNote])
+  }, [notebooksAtom, notes, pinned, trashedNotes, tags, selectedNote, reload])
 
   const notebookCreation = () => {
     console.log("Notebook creation button hit");

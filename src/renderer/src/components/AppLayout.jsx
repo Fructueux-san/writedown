@@ -10,6 +10,7 @@ import { editorViewOpenedAtom, openDoc, selectedNoteAtom } from "../hooks/editor
 import DefaultLayout from "./DefaultLayout";
 import DocumentInfo from "./DocumentInfo";
 import MainSidebar from "./MainSidebar";
+import { reloadAtom } from "../hooks/global";
 
 
 const AppLayout = () => {
@@ -17,10 +18,11 @@ const AppLayout = () => {
   const [noteIndex] = useAtom(selectedNoteAtom);
   const [rawActive] = useAtom(editorViewOpenedAtom);
   const previewRef = useRef();
+  const [reload] = useAtom(reloadAtom);
 
   useEffect(() => {
     console.log("Note ID change ");
-  }, [noteIndex]);
+  }, [noteIndex, reload]);
   return (
     <div className="app-layout">
       <MainSidebar />

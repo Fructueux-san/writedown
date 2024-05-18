@@ -52,7 +52,7 @@ const  App = () => {
       setTrashedNotes(data);
     });
 
-  }, []);
+  }, [reload]);
 
   useEffect(() => {
     console.log("Refreshing main");

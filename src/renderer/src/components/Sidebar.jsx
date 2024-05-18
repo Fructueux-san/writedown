@@ -8,7 +8,7 @@ import Modal from "./Modal";
 import "../assets/sidebar.css";
 import {Content} from "./SidebarElement";
 import { RiBook2Line, RiDeleteBin5Fill, RiDeleteBin5Line, RiPushpinLine } from "react-icons/ri";
-import { reloadAtom, sidebarTitleAtom, trashedNotesAtom } from "../hooks/global";
+import { reloadAtom, selectedNotebookAtom, sidebarTitleAtom, trashedNotesAtom } from "../hooks/global";
 import { AllNotesActions, NotebookActions, PinnedNotesAction, TrashNotesActions } from "./SidebarActions";
 
 const SideBar = (props) => {
@@ -20,21 +20,9 @@ const SideBar = (props) => {
   const [newNoteTitle, setNewNoteTitle] = useState("");
   const [modalAdditionalInfo, setModalAdditionalInfo] = useState("");
   const [openedDoc, setOpenDoc] = useAtom(openDoc);
-  const [editorViewOpened, setViewOpenedAtom] = useAtom(editorViewOpenedAtom);
-  const [docInfo, setDocInfo] = useAtom(activeDocInformations);
   const [sidebarTitle] = useAtom(sidebarTitleAtom);
-  const [trashedNotes, setTrashedNotes] = useAtom(trashedNotesAtom);
+  const [selectedNotebook] = useAtom(selectedNotebookAtom);
   const [reload, setReload] = useAtom(reloadAtom);
-
-  // function reload() {
-  //   setSelectedNote(null);
-  //   setOpenDoc(null);
-  //   setViewOpenedAtom(false);
-  //   setDocInfo(null);
-  // }
-  //
-
-
 
   function handleNewNoteTitleChange(e) {
     setNewNoteTitle(e.target.value);
@@ -71,22 +59,31 @@ const SideBar = (props) => {
       console.log("Move to trash ");
       window.electron.ipcRenderer.on("move-to-tash-success", async (event, message) => {
         console.log("Move to trash ok. ");
-        setSelectedNote(null);
-        setOpenDoc(null);
       });
     }else {
       console.log("Note not found ! ");
     }
     setDeleteNoteModal(false);
     refreshSidebarTrigger();
+    setSelectedNote(null);
+    setOpenDoc(null);
   }
 
   // This function refresh global state variable and trigger the useEffect here to refresh
   function refreshSidebarTrigger(){
-        window.electron.ipcRenderer.send("get-all-notes");
-        setNotes(notes);
-        window.electron.ipcRenderer.send("all-in-trash", null);
         window.electron.ipcRenderer.send("all-notebooks");
+        setReload(!reload);
+        // setNotes(notes);
+        if (sidebarTitle == "All notes"){
+          window.electron.ipcRenderer.send("get-all-notes");
+        }else if (sidebarTitle == "Pinned notes"){
+          window.electron.ipcRenderer.send("pinned-notes");
+        }else if (sidebarTitle == "Trash") {
+          window.electron.ipcRenderer.send("all-in-trash", null);
+        }else {
+          window.electron.ipcRenderer.send("notebook-notes", selectedNotebook);
+        }
+
         // setReload(!reload);
   }
 
