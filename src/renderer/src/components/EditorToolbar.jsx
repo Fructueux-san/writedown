@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiCloseCircleLine } from "react-icons/ri";
 import { BsMarkdown, BsFileEarmarkPdf } from "react-icons/bs";
 import html2canvas from "html2canvas";
@@ -8,6 +8,7 @@ import "../assets/editor-toolbar.css";
 import { useAtom } from "jotai";
 import { editorViewOpenedAtom, openDoc, selectedNoteAtom,openedObjectAtom } from "../hooks/editor";
 import { saveToPdf } from "../utils/helpers";
+import { allTagsAtom } from "../hooks/global";
 
 export const Toolbar = ({previewRef}) => {
   const [editorActive, setEditorActive] = useAtom(editorViewOpenedAtom);
@@ -15,6 +16,8 @@ export const Toolbar = ({previewRef}) => {
   const [doc, setDoc] = useAtom(openDoc);
   const [docInfo, setDocInfo] = useAtom(openedObjectAtom);
   const [tagsListOpen, setTagsListOpen] = useState(false);
+  const [tags, setTags] = useAtom(allTagsAtom);
+
 
   const activeRawBtn = () => {
     if (editorActive){
@@ -74,7 +77,18 @@ export const Toolbar = ({previewRef}) => {
 
         </div>
         <div className={"tags-list"+(tagsListOpen ? " open " : "")}>
-          Tag list
+          <ul>
+            {
+              tags != null ?
+                tags.map(element => {
+                  return(
+                    <li key={element.id}>
+                      <div className="color" style={{ backgroundColor: element.color }}>
+                      </div>{element.name}
+                    </li>)
+                }): null
+            }
+          </ul>
         </div>
       </div>
       </div>
