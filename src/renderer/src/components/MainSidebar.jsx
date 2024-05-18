@@ -142,6 +142,7 @@ export default function MainSidebar () {
               return (
                     <li key={element.id}
                       onDoubleClick={() =>{
+                        setActiveSubmenu("notebooks");
                         setSidebarTitle(element.name)
                         getNotebookNotes(element.id)}
                       }

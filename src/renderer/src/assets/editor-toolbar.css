@@ -68,7 +68,8 @@
 .app-layout .editor-layout header .tags-block {
   display: flex;
   align-items: start;
-  justify-items: self-start;
+  justify-content: start;
+  /* justify-items: self-start; */
   margin-left: 0;
 }
 .app-layout .editor-layout header .tags-block .tags {
@@ -87,29 +88,44 @@
   border-radius: 5px;
   min-width: 170px;
   color: white;
-  /* padding: 7px; */
   display: none;
   transition: height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background-color: rgba(37, 37, 37, 0.6);
+  backdrop-filter: blur(10px);
 }
 
 .app-layout .editor-layout header .tags-block .tags-list.open {
   display: block;
   height: auto;
   max-height: 260px;
+  overflow-y: auto;
 }
 
 
 .app-layout .editor-layout header .tags-block .tags-list ul {
   list-style: none;
-  margin: 0 auto;
+  width: 100%;
+  padding-left: 0;
 }
 
 .app-layout .editor-layout header .tags-block .tags-list ul li {
   margin-bottom: 7px;
   display: flex;
+  height: 30px;
   flex-direction: row;
   gap: 1rem;
   align-items: center;
+  justify-content: start;
+  padding-left: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.app-layout .editor-layout header .tags-block .tags-list ul li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.app-layout .editor-layout header .tags-block .tags-list ul li:hover > * {
+  scale: 1.02;
 }
 
 .app-layout .editor-layout header .tags-block .tags-list ul li .color {
