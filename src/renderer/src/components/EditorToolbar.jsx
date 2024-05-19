@@ -113,7 +113,11 @@ export const Toolbar = ({previewRef}) => {
                 <div
                   className="tag"
                   key={index}
-                  style={{ backgroundColor: tagData(element.tag).color }}>
+                  style={{
+                    border: "1px solid "+tagData(element.tag).color,
+                    color: tagData(element.tag).color
+                  }}
+                >
                     <span className="title">{tagData(element.tag).name}</span>
                     <span className="icon"></span>
                 </div>)
