@@ -9,7 +9,7 @@ export const notesEvents = (ipcMain) => {
 
   ipcMain.on("new-note", async (event, data) => {
     try {
-      console.log("New note creation ");
+      console.log("New note creation with ", data);
       var result = await createNote(data);
       event.sender.send("new-note", { data: result, message:"Note successfully created"});
     }catch (err){

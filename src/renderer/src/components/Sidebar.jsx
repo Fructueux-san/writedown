@@ -39,7 +39,8 @@ const SideBar = (props) => {
           title: newNoteTitle.trim(),
           content: "",
           created_at: Date.now(),
-          updated_at: Date.now()
+          updated_at: Date.now(),
+          notebook: selectedNotebook
         };
         window.electron.ipcRenderer.send("new-note", data);
         window.electron.ipcRenderer.on("new-note", async (event, data) => {
@@ -72,7 +73,7 @@ const SideBar = (props) => {
   // This function refresh global state variable and trigger the useEffect here to refresh
   function refreshSidebarTrigger(){
         window.electron.ipcRenderer.send("all-notebooks");
-        setReload(!reload);
+        // setReload(!reload);
         // setNotes(notes);
         if (sidebarTitle == "All notes"){
           window.electron.ipcRenderer.send("get-all-notes");

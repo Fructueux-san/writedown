@@ -41,12 +41,12 @@ export default function MainSidebar () {
 
   const notebookCreation = () => {
     console.log("Notebook creation button hit");
-    if (newNotebookName !== "") {
+    if (newNotebookName !== "" && selectedNotebook !== null) {
         let data = {
           name: newNotebookName.trim(),
           description: "",
           created_at: Date.now(),
-          updated_at: Date.now()
+          updated_at: Date.now(),
         };
         window.electron.ipcRenderer.send("new-notebook", data);
         window.electron.ipcRenderer.on("success", async (event, data) => {
@@ -147,7 +147,9 @@ export default function MainSidebar () {
                       onDoubleClick={() =>{
                         setActiveSubmenu("notebooks");
                         setSidebarTitle(element.name)
-                        getNotebookNotes(element.id)}
+                        getNotebookNotes(element.id)
+                        setSelectedNotebook(element.id);
+                      }
                       }
                     >
                       <div className="notebook">
