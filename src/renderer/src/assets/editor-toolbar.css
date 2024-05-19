@@ -67,17 +67,28 @@
 
 .app-layout .editor-layout header .tags-block {
   display: flex;
-  align-items: start;
-  justify-content: start;
-  /* justify-items: self-start; */
+  align-items: center;
+  justify-content: center;
   margin-left: 0;
+  gap: 1rem;
+  /* background-color: rgba(255, 255, 255, 0.1); */
+  /* padding: 8px; */
 }
 .app-layout .editor-layout header .tags-block .tags {
   display: flex;
   flex-direction: row;
-  flex: none;
   flex-wrap: nowrap;
   overflow-x: auto;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-layout .editor-layout header .tags-block .tags .tag {
+  padding: 3px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
 }
 
 .app-layout .editor-layout header .tags-block .tags-list {

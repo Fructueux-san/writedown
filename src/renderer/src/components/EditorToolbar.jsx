@@ -17,7 +17,7 @@ export const Toolbar = ({previewRef}) => {
   const [docInfo, setDocInfo] = useAtom(openedObjectAtom);
   const [tagsListOpen, setTagsListOpen] = useState(false);
   const [tags, setTags] = useAtom(allTagsAtom);
-
+  const [selectedNoteTags, setSelectedNoteTags] = useState(null);
 
   const activeRawBtn = () => {
     if (editorActive){
@@ -43,6 +43,37 @@ export const Toolbar = ({previewRef}) => {
   function toogleTagsList() {
     setTagsListOpen(!tagsListOpen);
   }
+
+  function tagData(tagId) {
+    if (tags) {
+      for (let i=0; i<tags.length; i++) {
+        if (tags[i].id == tagId) return tags[i];
+      }
+    }
+    return null;
+  }
+
+  function addTagToNote(tagId) {
+    let data = {
+      tagId: tagId,
+      noteId: openedNote
+    };
+    window.electron.ipcRenderer.send("add-tag-to-note", data);
+    window.electron.ipcRenderer.send("get-note-tags", openedNote);
+  }
+
+  useEffect(() => {
+    window.electron.ipcRenderer.send("get-note-tags", openedNote);
+    window.electron.ipcRenderer.on("note-tags", (event, data) => {
+      console.log(`Note ${openedNote} tags are : `, data)
+      setSelectedNoteTags(data);
+    });
+
+    window.electron.ipcRenderer.on("add-tag-to-note-success", (event, data) => {
+      console.log("Tag successfully added to notes.", data);
+      // setSelectedNoteTags(data);
+    });
+  }, []);
 
   const saveAsPdfFile = async (e) => {
       window.electron.ipcRenderer.send("pdf-on-fs", {
@@ -74,7 +105,19 @@ export const Toolbar = ({previewRef}) => {
       <div className="tags-block">
         <button className="add-tag btn" onClick={toogleTagsList}>Add tag</button>
         <div className="tags">
-
+        {
+          selectedNoteTags ?
+            selectedNoteTags.map((element, index) => {
+              return (
+                <div
+                  className="tag"
+                  key={index}
+                  style={{ backgroundColor: tagData(element.tag).color }}>
+                    <span className="title">{tagData(element.tag).name}</span>
+                    <span className="icon"></span>
+                </div>)
+            }): null
+        }
         </div>
         <div className={"tags-list"+(tagsListOpen ? " open " : "")}>
           <ul>
@@ -82,7 +125,7 @@ export const Toolbar = ({previewRef}) => {
               tags != null ?
                 tags.map(element => {
                   return(
-                    <li key={element.id}>
+                    <li key={element.id} onClick={() => addTagToNote(element.id)}>
                       <div className="color" style={{ backgroundColor: element.color }}>
                       </div>{element.name}
                     </li>)

@@ -1,5 +1,5 @@
 // const notes = require("../storage/note.db");
-import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes, allTrashedNotes, getPinnedNotes, getNotebookInfo } from "../storage/note.db";
+import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes, allTrashedNotes, getPinnedNotes, getNotebookInfo, addTagToNote, getNoteTags } from "../storage/note.db";
 
 export const notesEvents = (ipcMain) => {
   ipcMain.on("get-all-notes", async (event, message) => {
@@ -98,6 +98,16 @@ export const notesEvents = (ipcMain) => {
       console.log(err);
       event.sender.send("all-tags-error", {message: "Error when retrieve all tags. ", error: err});
     }
+  });
+
+  ipcMain.on("add-tag-to-note", async (event, data) => {
+    let tags = await addTagToNote(data.tagId, data.noteId);
+    event.sender.send("add-tag-to-note-success", tags);
+  });
+
+  ipcMain.on("get-note-tags", async (event, noteId) => {
+    let tags = await getNoteTags(noteId);
+    event.sender.send("note-tags", tags);
   });
 }
 
