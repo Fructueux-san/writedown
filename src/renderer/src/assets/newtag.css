@@ -1,6 +1,7 @@
 .newtag {
-  position: absolute;
-  left: 30px;
+  position: relative;
+  left: 150px;
+  top: -235px;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -11,6 +12,7 @@
   background-color: rgba(37, 37, 37, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.5);
+  width: fit-content;
 }
 
 .newtag input.tag-name {

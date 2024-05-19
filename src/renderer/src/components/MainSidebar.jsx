@@ -181,7 +181,7 @@ export default function MainSidebar () {
         <RiPriceTag3Line size={20} color="white"/>
         <span className="title">Tags</span>
       </div>
-      <span className="counter">3</span>
+      <span className="counter">{tags ? tags.length : null}</span>
     </div>
     <div className={ "content" + (tagListOpen ?" open": "")}>
       <ul>
@@ -200,7 +200,12 @@ export default function MainSidebar () {
         <span className="btn-name">Ajouter</span>
         <span className="btn-icon"><FaPlus /></span>
       </button>
-      {newTagPopupMenuOpen ? <NewTag close={() => setNewtagPopupMenuOpen(!newTagPopupMenuOpen)}/> : null}
+      {
+        newTagPopupMenuOpen ?
+          <NewTag
+            close={() => setNewtagPopupMenuOpen(!newTagPopupMenuOpen)}/> :
+          null
+      }
     </div>
   </div>
 

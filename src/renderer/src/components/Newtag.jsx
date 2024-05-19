@@ -33,6 +33,7 @@ export function NewTag (props) {
           colorList.map((element, index) => {
             return (
               <div
+                key={index}
                 onClick={() => setSelectedColor(element)}
                 className={"color" + (selectedColor==element ? " selected" : "")}
                 style={{ backgroundColor: element }}
