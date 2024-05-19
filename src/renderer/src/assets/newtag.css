@@ -1,18 +1,18 @@
 .newtag {
-  position: relative;
+  position: fixed;
   left: 150px;
-  top: -235px;
+  top: 235px;
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  overflow: visible;
   border: 1px solid #4b4b4b;
   margin: 10px;
   background-color: rgba(37, 37, 37, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.5);
   width: fit-content;
+  z-index: 10;
 }
 
 .newtag input.tag-name {
