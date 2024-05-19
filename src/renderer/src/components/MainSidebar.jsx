@@ -16,7 +16,7 @@ export default function MainSidebar () {
   // Menu active state
   const [activeSubmenu, setActiveSubmenu] = useState("all-notes");
 
-  const [tagListOpen, setTagListOpen] = useState(false);
+  const [tagListOpen, setTagListOpen] = useState(true);
 
 
   // Modal states
