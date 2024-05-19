@@ -6,6 +6,7 @@
   filter: brightness(1);
   border-right: 1px solid #3b3b3b;
   color: white;
+  z-index: 1;
 }
 
 .main-sidebar .main-sidebar-section {
@@ -71,7 +72,6 @@
 
 .main-sidebar .main-sidebar-section.tags .content .add-tag-btn {
   display: flex;
-  gap: 5px;
   justify-content: center;
   margin: 0 auto;
   outline: none;

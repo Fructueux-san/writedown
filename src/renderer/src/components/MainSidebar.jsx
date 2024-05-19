@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import { useAtom } from "jotai";
 import { allNoteBooksAtom, allNotebooksNotesAtom, allTagsAtom, pinnedNoteAtom, reloadAtom, selectedNotebookAtom, sidebarTitleAtom, trashedNotesAtom } from "../hooks/global";
 import { allNotesAtom, selectedNoteAtom } from "../hooks/editor";
+import { NewTag } from "./Newtag";
 
 export default function MainSidebar () {
   const [notebookListOpen, setNotebookListOpen] = useState(true);
@@ -32,6 +33,7 @@ export default function MainSidebar () {
   const [sidebarTitle, setSidebarTitle] = useAtom(sidebarTitleAtom);
   const [selectedNote] = useAtom(selectedNoteAtom);
   const [reload] = useAtom(reloadAtom);
+  const [newTagPopupMenuOpen, setNewtagPopupMenuOpen] = useState(false);
 
   useEffect(() => {
     console.log("Main Sidebar Refresh");
@@ -194,7 +196,11 @@ export default function MainSidebar () {
             }): null
         }
       </ul>
-      <button className="add-tag-btn "><span className="btn-name">Ajouter</span><span className="btn-icon"><FaPlus /></span></button>
+      <button className="add-tag-btn" onClick={() => setNewtagPopupMenuOpen(!newTagPopupMenuOpen)}>
+        <span className="btn-name">Ajouter</span>
+        <span className="btn-icon"><FaPlus /></span>
+      </button>
+      {newTagPopupMenuOpen ? <NewTag close={() => setNewtagPopupMenuOpen(!newTagPopupMenuOpen)}/> : null}
     </div>
   </div>
 
