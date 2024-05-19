@@ -60,6 +60,7 @@ export const Toolbar = ({previewRef}) => {
     };
     window.electron.ipcRenderer.send("add-tag-to-note", data);
     window.electron.ipcRenderer.send("get-note-tags", openedNote);
+    toogleTagsList();
   }
 
   useEffect(() => {
