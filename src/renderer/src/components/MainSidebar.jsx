@@ -50,7 +50,8 @@ export default function MainSidebar () {
         };
         window.electron.ipcRenderer.send("new-notebook", data);
         window.electron.ipcRenderer.on("success", async (event, data) => {
-          console.log(data);
+          // console.log(data);
+          window.electron.ipcRenderer.send("all-notebooks");
           setNotebookModalOpen(false);
           setNewnotebookName("");
         });
