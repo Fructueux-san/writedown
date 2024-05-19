@@ -1,4 +1,4 @@
-import { FaAngleRight, FaBookmark, FaBookAtlas } from "react-icons/fa6";
+import { FaAngleRight, FaBookmark, FaBookAtlas, FaPlus } from "react-icons/fa6";
 import {RiAddCircleLine, RiBookMarkedLine, RiDeleteBin5Line, RiHashtag, RiPriceTag3Line, RiPushpinLine} from "react-icons/ri"
 import "../assets/main-sidebar.css";
 import { useEffect, useState } from "react";
@@ -194,6 +194,7 @@ export default function MainSidebar () {
             }): null
         }
       </ul>
+      <button className="add-tag-btn "><span className="btn-name">Ajouter</span><span className="btn-icon"><FaPlus /></span></button>
     </div>
   </div>
 
