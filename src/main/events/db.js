@@ -1,5 +1,5 @@
 // const notes = require("../storage/note.db");
-import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes, allTrashedNotes, getPinnedNotes, getNotebookInfo, addTagToNote, getNoteTags } from "../storage/note.db";
+import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes, allTrashedNotes, getPinnedNotes, getNotebookInfo, addTagToNote, getNoteTags, createTag } from "../storage/note.db";
 
 export const notesEvents = (ipcMain) => {
   ipcMain.on("get-all-notes", async (event, message) => {
@@ -108,6 +108,12 @@ export const notesEvents = (ipcMain) => {
   ipcMain.on("get-note-tags", async (event, noteId) => {
     let tags = await getNoteTags(noteId);
     event.sender.send("note-tags", tags);
+  });
+
+  ipcMain.on("new-tag", async (event, data) => {
+      await createTag(data);
+      let tags = await allTags();
+      event.sender.send("tags-success", tags);
   });
 }
 
