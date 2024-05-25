@@ -14,7 +14,7 @@ function Modal ({openModal, closeModal, children, action='Test', actionCallback,
   return (
     <dialog ref={ref} className="modal" onClose={closeModal}>
       <div className="title">{title}</div>
-      <div className="content">
+      <div className="modal-content">
         { children }
       </div>
       <div className="btn-row">

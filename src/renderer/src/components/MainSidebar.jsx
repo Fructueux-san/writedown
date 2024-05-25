@@ -205,8 +205,19 @@ export default function MainSidebar () {
       </button>
       {
         newTagPopupMenuOpen ?
-          <NewTag
-            close={() => setNewtagPopupMenuOpen(!newTagPopupMenuOpen)}/> :
+          <Modal
+            openModal={newTagPopupMenuOpen}
+            closeModal={() => setNewtagPopupMenuOpen(false)}
+            action="Create"
+            title="Create new tag"
+            type="success"
+            actionCallback={()=>console.log("OKay")}
+          >
+            <NewTag
+              // close={() => setNewtagPopupMenuOpen(!newTagPopupMenuOpen)}
+        />
+          </Modal>
+           :
           null
       }
     </div>

@@ -58,7 +58,7 @@ dialog.modal .btn-row button.warning {
   background-color: orange;
 }
 
-dialog.modal .content input:focus {
+dialog.modal .modal-content input:focus {
   outline-color: white;
   outline-width: 1px;
   outline-offset: 1px;
