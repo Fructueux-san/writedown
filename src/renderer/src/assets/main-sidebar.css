@@ -115,12 +115,16 @@
   cursor: pointer;
 }
 
-.main-sidebar .main-sidebar-section.notebooks .content ul li .notebook {
+.main-sidebar .main-sidebar-section.notebooks .content ul li {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
-
+.main-sidebar .main-sidebar-section.notebooks .content ul .notebook.active {
+  color: orange;
+  font-weight: bold;
+  user-select: none;
+}
 .main-sidebar .main-sidebar-section.notebooks .content ul li .counter {
   font-size: 0.7rem;
 }

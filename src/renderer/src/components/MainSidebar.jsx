@@ -1,5 +1,5 @@
-import { FaAngleRight, FaBookmark, FaBookAtlas, FaPlus } from "react-icons/fa6";
-import {RiAddCircleLine, RiBookMarkedLine, RiDeleteBin5Line, RiHashtag, RiPriceTag3Line, RiPushpinLine} from "react-icons/ri"
+import { FaAngleRight, FaBookmark, FaBookAtlas, FaPlus, FaCube, FaCubes } from "react-icons/fa6";
+import {RiAddCircleLine, RiBallPenFill, RiBookMarkedLine, RiDeleteBin5Line, RiDeleteBinLine, RiHashtag, RiPriceTag3Line, RiPushpinLine} from "react-icons/ri"
 import "../assets/main-sidebar.css";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
@@ -89,6 +89,7 @@ export default function MainSidebar () {
     <div
       className={"head " + (activeSubmenu=='all-notes' ? "active " : "")}
       onDoubleClick={() => {
+        setSelectedNotebook(null);
         setSidebarTitle("All notes");
         setActiveSubmenu("all-notes");
         window.electron.ipcRenderer.send("get-all-notes");
@@ -109,6 +110,7 @@ export default function MainSidebar () {
   <div className="main-sidebar-section pin">
     <div className={"head"+ (activeSubmenu=='pinned' ? " active" : "")}
       onDoubleClick={() => {
+        setSelectedNotebook(null);
         setSidebarTitle("Pinned notes");
         setActiveSubmenu("pinned");
         window.electron.ipcRenderer.send("pinned-notes", null);
@@ -144,7 +146,8 @@ export default function MainSidebar () {
             notebooksAtom.map(element => {
               return (
                     <li key={element.id}
-                      onDoubleClick={() =>{
+                      className={"notebook " + (selectedNotebook == element.id ? "active" : "")}
+                      onClick={() =>{
                         setActiveSubmenu("notebooks");
                         setSidebarTitle(element.name)
                         getNotebookNotes(element.id)
@@ -152,8 +155,8 @@ export default function MainSidebar () {
                       }
                       }
                     >
-                      <div className="notebook">
-                        <FaAngleRight size={12}/>
+                      <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                        <FaCube size={12}/>
                         <span className="notebook-name">{element.name}</span>
                       </div>
                       <span className="counter">{element.notes_count}</span>
@@ -167,9 +170,15 @@ export default function MainSidebar () {
   </div>
 
   <div className="main-sidebar-section trash">
-    <div className={"head"+ (activeSubmenu=='trash' ? " active" : "")} onDoubleClick={() => {setSelectedNotebook(null); allInTrash(); setActiveSubmenu("trash"); setSidebarTitle("Trash")}}>
+    <div
+      className={"head"+ (activeSubmenu=='trash' ? " active" : "")}
+      onDoubleClick={() => {
+        setSelectedNotebook(null);
+        allInTrash();
+        setActiveSubmenu("trash");
+        setSidebarTitle("Trash")}}>
       <div className="leading">
-        <RiDeleteBin5Line size={20} color="white"/>
+        <RiDeleteBinLine size={20} color="white"/>
         <span className="title">Corbeille</span>
       </div>
       <span className="counter">{trashedNotes.length}</span>
