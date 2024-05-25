@@ -212,6 +212,7 @@ export default function MainSidebar () {
             title="Create new tag"
             type="success"
             actionCallback={()=>console.log("OKay")}
+            withActionBar={false}
           >
             <NewTag
               // close={() => setNewtagPopupMenuOpen(!newTagPopupMenuOpen)}
