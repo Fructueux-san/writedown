@@ -50,7 +50,7 @@ const DefaultLayout = () => {
 
   return (
     <div className="default-layout">
-        <RiPenNibLine color="#3b3b3b" size={70} className="icon" />
+        <RiPenNibLine color="#5b5b5b" size={70} className="icon" />
         <h3>Open note or <a href="#" onClick={() => setCreateNoteModal(true)}>Create</a> new one</h3>
 
 
