@@ -54,7 +54,7 @@ const SideBar = (props) => {
     }
   }
 
-  function moteToTrash() {
+  function moveToTrash() {
     if (selectedNote != null) {
       window.electron.ipcRenderer.send("move-to-trash", selectedNote);
       console.log("Move to trash ");
@@ -129,8 +129,8 @@ const SideBar = (props) => {
         <Modal
           openModal={createNoteModal}
           closeModal={() => setCreateNoteModal(false)}
-          action="Créer"
-          title="Nouvelle note"
+          action="Create"
+          title="New note"
           type="success"
           actionCallback={createNote}
         >
@@ -145,14 +145,14 @@ const SideBar = (props) => {
           <Modal
             openModal={deleteNoteModal}
             closeModal={() => setDeleteNoteModal(false)}
-            action="Mettre à la corbeille"
-            title="Note suppression"
-            type="danger"
-            actionCallback={moteToTrash}
+            action="Move to trash"
+            title="Trash"
+            type="warning"
+            actionCallback={moveToTrash}
           >
           <div style={{ display: "flex", alignItems:"center", justifyContent: "center", gap: "1rem", padding: "10px" }}>
             <GoAlert size={30} color="red"/>
-            <span>Supprimer cette note. Cette action est irréversible !</span>
+            <span>Trash</span>
           </div>
           </Modal> :
           null

@@ -101,7 +101,7 @@ export default function MainSidebar () {
       }>
       <div className="leading">
         <RiHashtag size={20} color="white"/>
-        <span className="title">Vos notes</span>
+        <span className="title">Your notes</span>
       </div>
       <span className="counter">{allNotesbookNotes.length}</span>
       <FaAngleRight color="white" className="right-angle-icon" />
@@ -135,7 +135,7 @@ export default function MainSidebar () {
       onDoubleClick={() => {setNotebookListOpen(!notebookListOpen); setActiveSubmenu("notebooks");} }>
       <div className="leading">
         <RiBookMarkedLine size={20} color="white"/>
-        <span className="title">Votre carnet</span>
+        <span className="title"> Notebooks</span>
       </div>
       <RiAddCircleLine size={20} onClick={() =>setNotebookModalOpen(true)}/>
     </div>
@@ -163,7 +163,7 @@ export default function MainSidebar () {
                     </li>
 
               );
-            }) : null
+            }) : <div style={{ fontSize: "0.7rem" }}>Empty</div>
         }
       </ul>
     </div>
@@ -179,7 +179,7 @@ export default function MainSidebar () {
         setSidebarTitle("Trash")}}>
       <div className="leading">
         <RiDeleteBinLine size={20} color="white"/>
-        <span className="title">Corbeille</span>
+        <span className="title">Trash</span>
       </div>
       <span className="counter">{trashedNotes.length}</span>
     </div>
@@ -205,11 +205,11 @@ export default function MainSidebar () {
                   <div className="color" style={{ backgroundColor: element.color }}>
                   </div>{element.name}
                 </li>)
-            }): null
+            }): <div style={{ fontSize: "0.7rem" }}>No tags</div>
         }
       </ul>
       <button className="add-tag-btn" onClick={() => setNewtagPopupMenuOpen(!newTagPopupMenuOpen)}>
-        <span className="btn-name">Ajouter</span>
+        <span className="btn-name">Add</span>
         <span className="btn-icon"><FaPlus /></span>
       </button>
       {
@@ -239,8 +239,8 @@ export default function MainSidebar () {
           <Modal
             openModal={notebookModalOpen}
             closeModal={() => setNotebookModalOpen(false)}
-            action="Créer"
-            title="Creation d'un carnet"
+            action="Create"
+            title="Notebook creation"
             type="success"
             actionCallback={notebookCreation}
           >
@@ -254,8 +254,9 @@ export default function MainSidebar () {
               width: "200px",
               height: "1.5rem",
               paddingLeft:"5px",
-              fontSize: "1.2rem"
+              fontSize: "1.0rem"
               }}
+            placeholder="Notebook name"
             onChange={handleNotebookNamechange}/>
             <div className="over-infos" style={{ color: "red" }}>
               {modalAdditionalInfo}
