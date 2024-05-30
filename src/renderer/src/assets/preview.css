@@ -16,10 +16,11 @@
   font-size: 2em;
 }
 .preview blockquote {
-  padding: 10px;
-  background-color: rgba(27, 31, 35, 0.45);
+  padding: 7px;
+  background-color: rgba(37,37,37,0.3);
+  border-left: 3px solid #62A0EA;
 }
-.preview blockquote::before {
+.preview blockquote p::before {
     content: "";
     width: 3px;
     background-color: white;

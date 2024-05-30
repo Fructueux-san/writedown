@@ -56,13 +56,13 @@
   padding: 0.2em;
 }
 .main-sidebar .main-sidebar-section .content {
+  height: 0px;
   display: none;
-  height: 0;
-  transition: all 0.5s ease-in;
+  transition: height 500ms;
 }
 .main-sidebar .main-sidebar-section .content.open {
   display: block;
-  height: auto;
+  height: max-content;
 }
 
 .main-sidebar .main-sidebar-section .content ul {
