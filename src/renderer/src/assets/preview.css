@@ -20,12 +20,6 @@
   background-color: rgba(37,37,37,0.3);
   border-left: 3px solid #62A0EA;
 }
-.preview blockquote p::before {
-    content: "";
-    width: 3px;
-    background-color: white;
-    height: 100%;
-}
 
 .preview table {
   min-width: 600px;
