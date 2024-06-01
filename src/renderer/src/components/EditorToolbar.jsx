@@ -73,6 +73,7 @@ export const Toolbar = ({previewRef}) => {
     window.electron.ipcRenderer.on("add-tag-to-note-success", (event, data) => {
       console.log("Tag successfully added to notes.", data);
       // setSelectedNoteTags(data);
+      window.electron.ipcRenderer.send("get-note-tags", openedNote);
     });
   }, []);
 

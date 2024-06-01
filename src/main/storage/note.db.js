@@ -88,7 +88,7 @@ export function addTagToNote(tagId, noteId) {
 }
 
 export function getNoteTags(noteId) {
-  return knex("notes").join("notes_have_tags", "notes.id", "notes_have_tags.note").where({note: noteId});
+  return knex("tags").join("notes_have_tags", "tags.id", "notes_have_tags.tag").where({note: noteId});
 }
 
 module.exports = {

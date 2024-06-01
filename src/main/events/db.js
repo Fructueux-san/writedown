@@ -101,8 +101,25 @@ export const notesEvents = (ipcMain) => {
   });
 
   ipcMain.on("add-tag-to-note", async (event, data) => {
-    let tags = await addTagToNote(data.tagId, data.noteId);
-    event.sender.send("add-tag-to-note-success", tags);
+    // check tag existance before save it
+    let alltags = await getNoteTags(data.noteId);
+    console.log(`All tags found : `);
+    console.log(alltags);
+    let found = false;
+    for (let i=0; i<alltags.length; i++){
+      if (alltags[i].tag == data.tagId){
+        found = true;
+        break;
+      }
+    }
+    console.log(`Found : ${found}`);
+    if (found == false){
+      console.log("Tag not found. Proceed adding ...")
+      let tags = await addTagToNote(data.tagId, data.noteId);
+      event.sender.send("add-tag-to-note-success", tags);
+    }else {
+      console.log("Tag already in the list ");
+    }
   });
 
   ipcMain.on("get-note-tags", async (event, noteId) => {
