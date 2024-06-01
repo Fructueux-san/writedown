@@ -89,6 +89,27 @@
   border-radius: 5px;
   color: white;
   font-size: 0.8rem;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  transition: width 300ms ease;
+}
+.app-layout .editor-layout header .tags-block .tags .tag:hover {
+  width: fit-content;
+}
+.app-layout .editor-layout header .tags-block .tags .tag:hover > .icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.app-layout .editor-layout header .tags-block .tags .tag .icon:hover {
+  scale: 1.2;
+}
+
+.app-layout .editor-layout header .tags-block .tags .tag .icon{
+  display: none;
 }
 
 .app-layout .editor-layout header .tags-block .tags-list {

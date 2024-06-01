@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { RiCloseCircleLine } from "react-icons/ri";
+import { RiCloseCircleFill, RiCloseCircleLine, RiCloseFill } from "react-icons/ri";
 import { BsMarkdown, BsFileEarmarkPdf } from "react-icons/bs";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -99,6 +99,15 @@ export const Toolbar = ({previewRef}) => {
     });
   }
 
+  function deleteNoteTag(tagId){
+    // alert(`Delete tag ${tagId}`);
+    let data = {
+      note: openedNote,
+      tag: tagId
+    }
+    window.electron.ipcRenderer.send("delete-note-tag", data);
+  }
+
   return (
     <header>
       <div className="btn-bloc">
@@ -119,8 +128,8 @@ export const Toolbar = ({previewRef}) => {
                     color: tagData(element.tag).color
                   }}
                 >
-                    <span className="title">{tagData(element.tag).name}</span>
-                    <span className="icon"></span>
+                    <div className="title">{tagData(element.tag).name}</div>
+                    <div className="icon" onClick={() => deleteNoteTag(element.tag)}><RiCloseCircleFill /> </div>
                 </div>)
             }): null
         }

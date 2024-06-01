@@ -1,5 +1,5 @@
 // const notes = require("../storage/note.db");
-import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes, allTrashedNotes, getPinnedNotes, getNotebookInfo, addTagToNote, getNoteTags, createTag } from "../storage/note.db";
+import { getNoteInfo, deleteNote, updateNote, getAllNotes, createNote, createNotebook, allNotebooks, allTags, notebookNotes, allTrashedNotes, getPinnedNotes, getNotebookInfo, addTagToNote, getNoteTags, createTag, deleteNoteTag } from "../storage/note.db";
 
 export const notesEvents = (ipcMain) => {
   ipcMain.on("get-all-notes", async (event, message) => {
@@ -103,8 +103,6 @@ export const notesEvents = (ipcMain) => {
   ipcMain.on("add-tag-to-note", async (event, data) => {
     // check tag existance before save it
     let alltags = await getNoteTags(data.noteId);
-    console.log(`All tags found : `);
-    console.log(alltags);
     let found = false;
     for (let i=0; i<alltags.length; i++){
       if (alltags[i].tag == data.tagId){
@@ -132,5 +130,10 @@ export const notesEvents = (ipcMain) => {
       let tags = await allTags();
       event.sender.send("tags-success", tags);
   });
+
+  ipcMain.on("delete-note-tag", async (event, data) => {
+    await deleteNoteTag(data.note, data.tag);
+    event.sender.send("note-tags", await getNoteTags(data.note));
+  })
 }
 

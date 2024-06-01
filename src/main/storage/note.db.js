@@ -91,6 +91,10 @@ export function getNoteTags(noteId) {
   return knex("tags").join("notes_have_tags", "tags.id", "notes_have_tags.tag").where({note: noteId});
 }
 
+export function deleteNoteTag(noteId, tagId) {
+  return knex("notes_have_tags").where("note", noteId).andWhere("tag", tagId).del();
+}
+
 module.exports = {
   getAllNotes,
   createNote,
@@ -113,5 +117,6 @@ module.exports = {
   tagInfo,
   allTags,
   addTagToNote,
+  deleteNoteTag,
   getNoteTags
 };
