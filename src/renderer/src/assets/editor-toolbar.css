@@ -1,11 +1,11 @@
 .app-layout .editor-layout header {
   display: flex;
   padding: 6px;
-  background-color: rgb(47, 47, 47);
+  background-color: rgb(47, 47, 47, 05);
   position: fixed;
   top: 0;
   z-index: 1;
-  width: 100%;
+  width: -webkit-fill-available;
   justify-content: space-between;
   align-items: center;
 }
