@@ -4,7 +4,7 @@ import "../assets/main-sidebar.css";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useAtom } from "jotai";
-import { allNoteBooksAtom, allNotebooksNotesAtom, allTagsAtom, pinnedNoteAtom, reloadAtom, selectedNotebookAtom, sidebarTitleAtom, trashedNotesAtom } from "../hooks/global";
+import { allNoteBooksAtom, allNotebooksNotesAtom, allTagsAtom, pinnedNoteAtom, reloadAtom, selectedNotebookAtom, sidebarOpenAtom, sidebarTitleAtom, trashedNotesAtom } from "../hooks/global";
 import { allNotesAtom, selectedNoteAtom } from "../hooks/editor";
 import { NewTag } from "./Newtag";
 
@@ -34,6 +34,7 @@ export default function MainSidebar () {
   const [selectedNote] = useAtom(selectedNoteAtom);
   const [reload] = useAtom(reloadAtom);
   const [newTagPopupMenuOpen, setNewtagPopupMenuOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useAtom(sidebarOpenAtom);
 
   useEffect(() => {
     console.log("Main Sidebar Refresh");
@@ -92,6 +93,7 @@ export default function MainSidebar () {
         setSelectedNotebook(null);
         setSidebarTitle("All notes");
         setActiveSubmenu("all-notes");
+        setSidebarOpen(true);
         window.electron.ipcRenderer.send("get-all-notes");
         window.electron.ipcRenderer.on("all-notes", (event, data) => {
           setNotes(data);
@@ -110,6 +112,7 @@ export default function MainSidebar () {
   <div className="main-sidebar-section pin">
     <div className={"head"+ (activeSubmenu=='pinned' ? " active" : "")}
       onDoubleClick={() => {
+        setSidebarOpen(true);
         setSelectedNotebook(null);
         setSidebarTitle("Pinned notes");
         setActiveSubmenu("pinned");
@@ -132,7 +135,9 @@ export default function MainSidebar () {
 
   <div className="main-sidebar-section notebooks">
     <div className={"head"+ (activeSubmenu=='notebooks' ? " active" : "")}
-      onDoubleClick={() => {setNotebookListOpen(!notebookListOpen); setActiveSubmenu("notebooks");} }>
+      onDoubleClick={() => {
+        setNotebookListOpen(!notebookListOpen);
+        setActiveSubmenu("notebooks");} }>
       <div className="leading">
         <RiBookMarkedLine size={20} color="white"/>
         <span className="title"> Notebooks</span>
@@ -148,6 +153,7 @@ export default function MainSidebar () {
                     <li key={element.id}
                       className={"notebook " + (selectedNotebook == element.id ? "active" : "")}
                       onClick={() =>{
+                        setSidebarOpen(true);
                         setActiveSubmenu("notebooks");
                         setSidebarTitle(element.name)
                         getNotebookNotes(element.id)
@@ -173,6 +179,7 @@ export default function MainSidebar () {
     <div
       className={"head"+ (activeSubmenu=='trash' ? " active" : "")}
       onDoubleClick={() => {
+        setSidebarOpen(true);
         setSelectedNotebook(null);
         allInTrash();
         setActiveSubmenu("trash");

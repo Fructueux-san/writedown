@@ -11,9 +11,9 @@
   min-width: 250px;
   padding-top: 20px;
 
-  background-color: rgba(47, 47, 47, 0.8);
-  filter: blur(10px);
-  filter: brightness(1);
+  /* background-color: rgba(47, 47, 47, 0.95); */
+  /* filter: blur(10px); */
+  /* filter: brightness(1); */
   padding-bottom: 80px;
   resize: horizontal;
 }
