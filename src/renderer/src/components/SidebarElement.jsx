@@ -51,6 +51,8 @@ export const Content = ({id, title, lastEdit, notebookId}) => {
         window.electron.ipcRenderer.on("one-note", async (event, data) => {
           setOpenedObject(await data);
           setOpened(data["content"]);
+          // let newWindowTitle = getNotebookInfo(data.notebook).name + " ∙ " + data.title;
+          // window.electron.ipcRenderer.send("window-title", data.name);
         });
       }
     }

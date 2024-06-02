@@ -1,21 +1,26 @@
-import { seedNotes } from "./seeder";
-export const knex = require("knex")({
+const database = require("knex")({
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
       filename: './notes.db',
     }
 });
+// import knex from "knex";
+// export const database = knex({
+//     client: 'sqlite3',
+//     useNullAsDefault: true,
+//     connection: {
+//       filename: './notes.db',
+//     }
+// });
 
 export async function setupDatabase() {
-
-
   try {
-    await knex.schema.hasTable("notebooks").then(async (hasNotebooksTable) => {
+    await database.schema.hasTable("notebooks").then(async (hasNotebooksTable) => {
       if (hasNotebooksTable) return console.log("notebooks table already exists. Skip...");
       else {
         console.log("Creating notebooks table");
-        await knex.schema.createTable("notebooks", (table) => {
+        await database.schema.createTable("notebooks", (table) => {
           table.increments("id");
           table.string("name").notNullable();
           table.string("description");
@@ -26,10 +31,10 @@ export async function setupDatabase() {
       }
     });
 
-    await knex.schema.hasTable("notes").then( async(hasNotesTable) => {
+    await database.schema.hasTable("notes").then( async(hasNotesTable) => {
       if (hasNotesTable) return console.log("Notes Already exists");
       else {
-        await knex.schema.createTable('notes', (table) => {
+        await database.schema.createTable('notes', (table) => {
             table.increments("id");
             table.string("title");
             table.text("content");
@@ -43,10 +48,10 @@ export async function setupDatabase() {
       return;
     });
 
-    // await knex.schema.hasTable("notebook_has_notes").then( async (hasTable) => {
+    // await database.schema.hasTable("notebook_has_notes").then( async (hasTable) => {
     //   if (hasTable) console.log("notebook_has_notes table already exists. Skip");
     //   else {
-    //     await knex.schema.createTable("notebook_has_notes", (table) => {
+    //     await database.schema.createTable("notebook_has_notes", (table) => {
     //       table.increments("id");
     //       table.integer("notebook").references("notebooks.id");
     //       table.integer("note").references("notes.id");
@@ -57,10 +62,10 @@ export async function setupDatabase() {
     //   return;
     // });
 
-    await knex.schema.hasTable("tags").then(async (hasTagsTable) => {
+    await database.schema.hasTable("tags").then(async (hasTagsTable) => {
       if (hasTagsTable) return console.log("Tags table already exists. Skip ...");
       else {
-        await knex.schema.createTable('tags', (table) => {
+        await database.schema.createTable('tags', (table) => {
           table.increments("id");
           table.string("name").notNullable().unique();
           table.timestamps({useTimestamps: true, useCamelCase: false});
@@ -72,10 +77,10 @@ export async function setupDatabase() {
     });
 
 
-    await knex.schema.hasTable("notes_have_tags").then(async (tableExists) => {
+    await database.schema.hasTable("notes_have_tags").then(async (tableExists) => {
       if (tableExists) return console.log("notes_have_tags table already exists. Skip ...");
       else {
-        await knex.schema.createTable('notes_have_tags', (table) => {
+        await database.schema.createTable('notes_have_tags', (table) => {
           table.increments("id");
           table.integer("note").notNullable().references("notes.id");
           table.integer("tag").notNullable().references("tags.id");
@@ -93,4 +98,4 @@ export async function setupDatabase() {
 
 }
 
-module.exports = {setupDatabase, knex};
+module.exports = {setupDatabase, database};
