@@ -47,12 +47,13 @@ export const Content = ({id, title, lastEdit, notebookId}) => {
         setRawActive(false);
         setDocInfo(null);
         setSelected(id);
-        let onEditing = window.electron.ipcRenderer.send("get-one-note", id);
+        window.electron.ipcRenderer.send("get-one-note", id);
         window.electron.ipcRenderer.on("one-note", async (event, data) => {
           setOpenedObject(await data);
           setOpened(data["content"]);
-          // let newWindowTitle = getNotebookInfo(data.notebook).name + " ∙ " + data.title;
-          // window.electron.ipcRenderer.send("window-title", data.name);
+          // alert(data);
+          let newWindowTitle = notebookInformation(data.notebook).name + " ∙ " + data.title;
+          window.electron.ipcRenderer.send("window-title", newWindowTitle);
         });
       }
     }

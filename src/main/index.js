@@ -29,9 +29,10 @@ function createWindow() {
     }
   })
 
-  // ipcMain.on("window-title", (event, data) => {
-  //     mainWindow.setTitle(data);
-  // });
+  ipcMain.on("window-title", (event, data) => {
+      mainWindow.setTitle(data);
+  });
+
   mainWindow.webContents.on('dom-ready', () => {
     mainWindow.blur = 10;
   });
