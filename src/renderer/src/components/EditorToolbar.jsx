@@ -8,7 +8,7 @@ import "../assets/editor-toolbar.css";
 import { useAtom } from "jotai";
 import { editorViewOpenedAtom, openDoc, selectedNoteAtom,openedObjectAtom } from "../hooks/editor";
 import { saveToPdf } from "../utils/helpers";
-import { allTagsAtom } from "../hooks/global";
+import { allTagsAtom, sidebarTitleAtom } from "../hooks/global";
 
 export const Toolbar = ({previewRef}) => {
   const [editorActive, setEditorActive] = useAtom(editorViewOpenedAtom);
@@ -18,6 +18,7 @@ export const Toolbar = ({previewRef}) => {
   const [tagsListOpen, setTagsListOpen] = useState(false);
   const [tags, setTags] = useAtom(allTagsAtom);
   const [selectedNoteTags, setSelectedNoteTags] = useState(null);
+  const [sidebarTitle] = useAtom(sidebarTitleAtom);
 
   const activeRawBtn = () => {
     if (editorActive){
@@ -111,7 +112,10 @@ export const Toolbar = ({previewRef}) => {
   return (
     <header>
       <div className="btn-bloc">
-        <button className={(editorActive ? 'active' : '')} onClick={activeRawBtn}>Raw</button>
+      {
+        sidebarTitle != "Trash" ?
+          <button className={(editorActive ? 'active' : '')} onClick={activeRawBtn}>Raw</button> : null
+      }
         <button className={(!editorActive ? 'active' : '')} onClick={activePreviewBtn}>Preview</button>
       <div className="tags-block">
         <button className="add-tag btn" onClick={toogleTagsList}>Add tag</button>
