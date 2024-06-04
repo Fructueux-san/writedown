@@ -42,7 +42,7 @@ export default function MainSidebar () {
 
   const notebookCreation = () => {
     console.log("Notebook creation button hit");
-    if (newNotebookName !== "" && selectedNotebook !== null) {
+    if (newNotebookName !== "" && newNotebookName !== null) {
         let data = {
           name: newNotebookName.trim(),
           description: "",
