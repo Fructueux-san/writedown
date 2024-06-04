@@ -14,6 +14,9 @@ import "../assets/copybutton.css";
 import remarkToc from "remark-toc";
 import remarkRehype from "remark-rehype";
 import remarkMath from "remark-math";
+import remarkHtml from "remark-html";
+import { FaExclamation } from "react-icons/fa6";
+import { GoAlert, GoAlertFill, GoInfo, GoStop } from "react-icons/go";
 const Preview = ({doc, previewRef})=>{
 
     const Pre = ({ children }) => <pre className="blog-pre">
@@ -23,7 +26,31 @@ const Preview = ({doc, previewRef})=>{
 
     return (
         <div className={"preview markdown-body"} ref={previewRef}>
-            <Markdown remarkPlugins={[remarkGfm, remarkRehype, remarkGemoji, remarkHint, remarkMath]} rehypePlugins={[rehypeRaw]} components={{
+            <Markdown remarkPlugins={[remarkHtml, remarkHint, remarkGfm, remarkGemoji, remarkRehype, remarkMath  ]} rehypePlugins={[rehypeRaw]} components={{
+                p(props){
+                  const {children, className, node, ...rest} = props;
+                  let classes = className.split(" ");
+                  if (classes.indexOf("hint") !== -1){
+                    if (classes.indexOf("error") !== -1) {
+                      return <p className="hint error">
+                          <GoStop size={20} color="red"/>
+                          <div>{children}</div>
+                        </p>
+                    }else if (classes.indexOf("tip") !== -1){
+                      return <p size={20} className="hint tip">
+                        <GoInfo size={20} color="blue" />
+                        <div>{children}</div>
+                        </p>
+                    }else if (classes.indexOf("warn") !== -1){
+                      return <p className="hint warn">
+                        <GoAlertFill size={20} color="orange" />
+                        <div>{children}</div>
+                        </p>
+                    }else {
+                      return <p className={className}>{children}</p>
+                    }
+                  }
+                },
                 pre: Pre,
                 code(props) {
                     const {children, className, node, ...rest} = props
